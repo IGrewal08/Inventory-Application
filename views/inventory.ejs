@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><% title %></title>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <nav>
+        <div>Nav Bar Form</div>
+    </nav>
+    <main>
+        <ul>
+            <% if(locals.items) { %>
+                <% items.forEach(item => { %>
+                    <li>
+                        <img src="#">
+                        <div>
+                            <div>Name</div>
+                            <div>Price</div>
+                        </div>
+                        <div>quantity</div>
+                        <div>Developer/s</div>
+                        <div>Genre/s</div>
+                    </li>
+                <% }); %>
+            <% } %>
+        </ul>
+    </main>
+    <%- include('partials/footer') %>
+</body>
+</html>

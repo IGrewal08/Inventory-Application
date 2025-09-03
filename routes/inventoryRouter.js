@@ -1,15 +1,15 @@
 import { Router } from "express";
-import inventoryController from './controllers/inventoryController';
-import productController from './controller/productController';
+import * as inventoryController from '../controllers/inventoryController.js';
+import * as productController from '../controllers/productController.js';
 
 const inventoryRouter = Router();
 
-inventoryRouter.get('/', inventoryController);
-inventoryRouter.get('/Inventory', inventoryController);
-inventoryRouter.get('/Inventory/Search', inventoryController);
-inventoryRouter.get('Category', inventoryController);
-inventoryRouter.get('/Product/:name', productController);
-inventoryRouter.post('/Product/:name', productController);
+inventoryRouter.get("/", inventoryController.getHomePage);
+inventoryRouter.get("/inventory", inventoryController.getInventoryList);
+inventoryRouter.get("/inventory/search", inventoryController.getInventorySearch);
+inventoryRouter.get("category", inventoryController.getCategories);
+inventoryRouter.get("/product/:name", productController.getProduct);
+inventoryRouter.post("/product/:name", productController.postProduct);
 
 
 export default inventoryRouter;
