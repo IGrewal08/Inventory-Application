@@ -48,7 +48,7 @@ VALUES
 
 INSERT INTO genres (genre_name)
 VALUES
-('Advanture'),
+('Adventure'),
 ('Action'),
 ('Role-Playing'),
 ('Shooter'),
@@ -65,7 +65,7 @@ VALUES (1, 1), (1, 2), (2, 2), (2, 3), (2, 4), (3, 1), (3, 2);
 async function main() {
     console.log("seeding...");
     const client = new Client({
-        connectionString: `postgresql://${process.env.USER}:${process.env.PASS}@localhost:5432/${process.env.DB}`;
+        connectionString: `postgresql://${process.env.ROLE_NAME}:${process.env.ROLE_PASSWORD}@localhost:5432/${process.env.DATABASE_NAME}`,
     });
     await client.connect();
     await client.query(sql_create);
@@ -74,4 +74,5 @@ async function main() {
     console.log("seeding complete");
 }
 
+main();
 
