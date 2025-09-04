@@ -17,7 +17,7 @@ async function getAllInventory() {
     return rows;
 }
 
-async function getInventoryByQuery(query) {
+async function getInventoryByQuery(query) { // incomplete
     const updatedQuery = myQuery + 
     ` WHERE game_name IN (SELECT ga.game_name
         FROM developers d
@@ -36,13 +36,26 @@ async function getInventoryByQuery(query) {
 
 async function getProductBySearch(search) {
     const updatedQuery = myQuery +
-    `WHERE UPPER(game_name) LIKE UPPER('%${search}%') OR UPPER(developer_name) LIKE UPPER('%${search}%')
+    `WHERE UPPER(game_name) LIKE UPPER('%$1%') OR UPPER(developer_name) LIKE UPPER('%$1%')
     GROUP BY game_name
-    `
-    const { rows } = await pool.query(updatedQuery);
+    `;
+    const { rows } = await pool.query(updatedQuery, [search]);
     return rows;
+}
+
+async function updateProductByName(product, data) {
+    
+}
+
+async function deleteProductByName(product) {
+    const deleteQuery = `DELETE FROM games WHERE game_id = $1 
+        DELETE FROM game_developers WHERE game_id = $1
+        DELETE FROM game_genres WHERE game_id = $1
+    `;
+    const productId = await pool.query('SELECT game_id FROM games WHERE game_name = $1', [product]);
+    await pool.query(deleteQuery, [productId]);
 }
 
 
 
-export default { getAllInventory, getProductBySearch};
+export default { getAllInventory, getInventoryByQuery, getProductBySearch, deleteProductByName };

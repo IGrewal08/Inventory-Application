@@ -36,30 +36,41 @@ CREATE TABLE IF NOT EXISTS game_genres (
 const sql_insert = `
 INSERT INTO games (game_name, game_price, game_quantity) 
 VALUES 
-('Minecraft', 9.99, 10),
-('GTA 5', 29.99, 15),
-('Skyrim', 19.99, 20);
+('EA Sports FC, 69.99, 30),
+('Marvel's Spider-Man RE', 49.99, 50),
+('Grand Turismo 7', 69.99, 80),
+('Stardew Valley', 14.99, 100),
+('Elden Ring', 59.99, 120),
+('The Last of Us Part 2 RE', 49.99, 100),
+('Grand Theft Auto', 19.99, 150),
+('Forza Horizon 5', 59.99, 25),
 
 INSERT INTO developers (developer_name)
 VALUES
-('Mojang Studios'),
+('Electronic Arts Inc'),
+('Sony Interactive Entertainment'),
+('ConcernedApe LLC'),
+('Bandai Namco Entertainment America'),
+('FromSoftware'),
 ('Rockstar Games'),
-('Bethesda Studios');
+('Microsoft Co.'),
+('Turn10 Studios'),
 
 INSERT INTO genres (genre_name)
 VALUES
-('Adventure'),
+('Sport'),
 ('Action'),
-('Role-Playing'),
-('Shooter'),
-('Platformer');
-*/
-/*
+('Driving'),
+('Racing'),
+('Simulation'),
+('Role Playing'),
+('Adventure'),
+
 INSERT INTO game_developers (game_id, developer_id) 
-VALUES (1, 1), (2, 2), (3, 3);
+VALUES (1, 1), (2, 2), (3, 2), (4, 3), (5, 4), (5, 5), (6, 2), (7, 6), (8, 7), (8, 8), ;
 
 INSERT INTO game_genres (game_id, genre_id)
-VALUES (1, 1), (1, 2), (2, 2), (2, 3), (2, 4), (3, 1), (3, 2);
+VALUES (1, 1), (2, 2), (3, 3), (3, 4), (4, 5), (4, 6), (4, 7), (5, 6), (6, 2), (6, 7), (7, 2), (7, 7) (8, 3), (8, 4);
 `;
 
 async function main() {

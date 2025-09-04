@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><% title %></title>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <ul>
+        <% if(locals.products) %>
+        <% products.forEach(product => {  %>
+            <li>
+                <img src="#" rel="image of product">
+                <div>
+                    <div>Name</div>
+                    <div>Directors</div>
+                </div>
+                <div>
+                    <div>Quantity</div>
+                    <div>Price</div>
+                </div>
+                <form>
+                    <button>Edit</button>
+                </form>
+                <form>
+                    <button>Delete</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+    <%- include('partials/footer') %>
+</body>
+</html>
