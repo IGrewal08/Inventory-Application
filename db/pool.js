@@ -2,10 +2,10 @@
 import { Pool } from "pg";
 import "dotenv/config";
 
-export default Pool({
-  host: "localhost",
+export default new Pool({
   user: process.env.ROLE_NAME,
+  host: 'localhost',
   database: process.env.DATABASE_NAME,
-  password: process.env.ROLE_PASSWORD,
-  host: 5432,
+  password: null,
+  port: 5432,
 });

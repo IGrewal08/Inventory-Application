@@ -1,17 +1,17 @@
 import { body, validationResult } from "express-validator";
-import query from "../db/query";
+import * as db from "../db/query.js";
 
 export const getProduct = (req, res) => {
-    const productName = req.param;
-    res.render("product", {
-        title: productName,
-    });
+  const productName = req.param;
+  res.render("product", {
+    title: productName,
+  });
 };
 
 export const postProduct = (req, res) => {
-    const {} = req.body;
-    res.redirect('/inventory');
-}
+  const {} = req.body;
+  res.redirect("/inventory");
+};
 
 export const getEditProduct = (req, res) => {
   res.render("edit", {
@@ -19,17 +19,14 @@ export const getEditProduct = (req, res) => {
   });
 };
 
-export const putEditProduct = (req, res) => {
-
-}
+export const putEditProduct = (req, res) => {};
 
 export const deleteProduct = async (req, res) => {
-    const product = req.body;
-    await query.deleteProductByName(product);
-    res.status(204).send();
-    res.redirect('/inventory');
-}
-
+  const product = req.body;
+  await db.deleteProductByName(product);
+  res.status(204).send();
+  res.redirect("/inventory");
+};
 
 /*
     feat:

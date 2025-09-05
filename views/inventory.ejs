@@ -7,25 +7,52 @@
 </head>
 <body>
     <%- include('partials/header') %>
+    <form name="sortForm" action="/inventory" method="GET">
+        <label>
+            Sort:
+        <select onchange="sortForm.submit()" name="sort">
+            <option name="sort" selected>Relevance</option>
+            <option name="sort" value="ASC">Name A-Z</option>
+            <option name="sort" value="DESC">Name Z-A</option>
+            <option name="sort" value="ASC">Price $$$-$</option>
+            <option name="sort" value="DESC">Price $-$$$</option>
+        </select>
+        </label>
+    </form> 
     <nav>
-        <div>Nav Bar Form</div>
+        <form action="/inventory" method="GET">
+            <ul>
+                <% genres.forEach(genre => { %>
+                <li>
+                    <label>
+                        <% if (queries != undefined && queries.includes(genre.name)) { %>
+                            <input type="checkbox" name="genre" id="<%= genre.name %>" value="<%= genre.name %>" checked>
+                        <% } else { %>   
+                            <input type="checkbox" name="genre" id="<%= genre.name %>" value="<%= genre.name %>">
+                        <% } %>
+                            <%= genre.name %>
+                    </label>
+                </li>
+                <% }); %>
+            </ul>
+            
+            <button type="submit">Submit</button>
+        </form>
     </nav>
     <main>
         <ul>
-            <% if(locals.products) { %>
-                <% products.forEach(product => { %>
-                    <li>
-                        <img src="#" rel="image of product">
-                        <div>
-                            <div>Name</div>
-                            <div>Price</div>
-                        </div>
-                        <div>quantity</div>
-                        <div>Developer/s</div>
-                        <div>Genre/s</div>
-                    </li>
-                <% }); %>
-            <% } %>
+            <% products.forEach(product => { %>
+                <li>
+                    <img src="#" rel="image of product">
+                    <div>
+                        <div><%= product.name %></div>
+                        <div>$<%= product.price %></div>
+                    </div>
+                    <div><%= product.quantity %></div>
+                    <div><%= product.developers %></div>
+                    <div><%= product.genres %></div>
+                </li>
+            <% }); %>
         </ul>
     </main>
     <%- include('partials/footer') %>

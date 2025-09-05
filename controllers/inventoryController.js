@@ -1,5 +1,5 @@
 import { body, validationResult } from "express-validator";
-import query from "../db/query";
+import { queryAllInventory, queryInventoryByFilter, queryProductBySearch, queryAllGenres } from "../db/query.js";
 
 export const getHomePage = (req, res) => {
   res.render("index", {
@@ -8,23 +8,35 @@ export const getHomePage = (req, res) => {
 };
 
 export const getInventoryList = async (req, res) => {
-  const inventoryList = await query.getAllInventory();
-  res.render("inventory", {
-    title: "Inventory",
-    products: inventoryList,
-  });
+  console.log(req.query.genre);
+  try {
+  const products = await queryAllInventory();
+  const genres = await queryAllGenres();
+    res.render("inventory", {
+      title: "Inventory",
+      products: products,
+      genres: genres,
+      queries: req.query.genre,
+    });
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 export const getInventorySearch = async (req, res) => {
-  const { search } = req.params;
-  const searchList = await query.getInventorySearch(search);
-  res.render("search", {
-    title: "Search",
-    products: searchList,
-  });
+  const { search } = req.query;
+  try {
+    const products = await queryProductBySearch(search);
+    res.render("search", {
+      title: "Search",
+      products: products,
+    });
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-export const getCategories = (req, res) => {
+export const getCategories = async (req, res) => {
   res.render("category", {
     title: "Categories",
   });

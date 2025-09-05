@@ -11,21 +11,18 @@
         <% if(locals.products) %>
         <% products.forEach(product => {  %>
             <li>
-                <img src="#" rel="image of product">
-                <div>
-                    <div>Name</div>
-                    <div>Directors</div>
-                </div>
-                <div>
-                    <div>Quantity</div>
-                    <div>Price</div>
-                </div>
-                <form>
-                    <button>Edit</button>
-                </form>
-                <form>
-                    <button>Delete</button>
-                </form>
+                <a href="LINK TO PAGE">
+                    <img src="#" rel="image of product">
+                    <div>
+                        <div><%= product.name %></div>
+                        <div>$<%= product.price %></div>
+                    </div>
+                    <div><%= product.quantity %></div>
+                    <div><%= product.developers %></div>
+                    <div><%= product.genres %></div>
+                </a>   
+                <a href="/product/<%= product.name %>/edit">Edit</a>
+                <a href="/product/<%= product.name %>/edit">Delete</a>
             </li>
         <% }); %>
     </ul>
