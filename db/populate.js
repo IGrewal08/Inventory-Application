@@ -102,7 +102,7 @@ VALUES (1, 1), (2, 2), (3, 3), (3, 4), (4, 5), (4, 6), (4, 7), (5, 6), (6, 2), (
 async function main() {
     console.log("seeding...");
     const client = new Client({
-        connectionString: `postgresql://${process.env.ROLE_NAME}@localhost:5432/inventory`,
+        connectionString: `postgresql://${process.env.ROLE_NAME}@localhost:5432/${process.env.DATABASE_NAME}`,
     });
       await client.connect();
       await client.query(sql_create);

@@ -1,5 +1,5 @@
 import { body, validationResult } from "express-validator";
-import * as db from "../db/query.js";
+import { queryUpdateProduct, queryDeleteProduct } from "../db/query.js";
 
 export const getProduct = (req, res) => {
   const productName = req.param;
@@ -23,7 +23,7 @@ export const putEditProduct = (req, res) => {};
 
 export const deleteProduct = async (req, res) => {
   const product = req.body;
-  await db.deleteProductByName(product);
+  await queryDeleteProduct(product);
   res.status(204).send();
   res.redirect("/inventory");
 };

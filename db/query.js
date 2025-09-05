@@ -17,24 +17,42 @@ export const queryAllInventory = async () => {
 };
 
 export const queryAllGenres = async () => {
-    const { rows } = await pool.query('SELECT DISTINCT genre_name as name FROM genres');
-    return rows;
-}
+  const { rows } = await pool.query(
+    "SELECT DISTINCT genre_name as name FROM genres"
+  );
+  return rows;
+};
 
+
+/* Alt way to placeholders */
 export const queryInventoryByFilter = async (query) => {
-  // incomplete
-  const updatedQuery = ` WHERE game_name IN (SELECT ga.game_name
+  const { genre, sort } = query;
+  let filterQuery = '';
+  let sortQuery = '';
+
+  if (genre != undefined) {
+    let queryLength = (!Array.isArray(genre)) ? 1 : Object.keys(genre).length;
+    let genreString = (!Array.isArray(genre)) ? `= '${genre}'` :` IN (${genre.map((element) => `'${element}'`).join(", ")})`;
+    filterQuery = `WHERE game_name IN (SELECT ga.game_name
         FROM developers d
         JOIN game_developers gd USING (developer_id)
         JOIN games ga USING (game_id)
         JOIN game_genres gg using (game_id)
         JOIN genres ge USING (genre_id)
-        WHERE genre_name IN ('Action', 'Adventure') AND developer_name IN ('Mojang Studios', 'Rockstar Games')          //replace with query params
+        WHERE genre_name ${genreString}
         GROUP By game_name
-        HAVING COUNT(DISTINCT genre_name) = 2 AND COUNT(DISTINCT developer_name) = 2)           //number = num of queries params
-        GROUP BY game_name, game_price, game_quantity;
-    `;
-  const { rows } = await pool.query(myQuery + updatedQuery);
+        HAVING COUNT(DISTINCT genre_name) = ${queryLength})
+    `
+  }
+
+  if (sort != undefined) {
+    const column = sort.split("_");
+    const allowedSorts = ['price', 'name', 'ASC', 'DESC'];
+    if (allowedSorts.includes(column[0]) && allowedSorts.includes(column[1])) {
+      sortQuery = ` ORDER BY ${column[0]} ${column[1]};`;
+    }
+  }
+  const { rows } = await pool.query(myQuery + filterQuery + 'GROUP BY game_name, game_price, game_quantity' + sortQuery);
   return rows;
 };
 

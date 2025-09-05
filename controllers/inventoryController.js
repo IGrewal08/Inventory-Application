@@ -1,5 +1,10 @@
 import { body, validationResult } from "express-validator";
-import { queryAllInventory, queryInventoryByFilter, queryProductBySearch, queryAllGenres } from "../db/query.js";
+import {
+  queryAllInventory,
+  queryInventoryByFilter,
+  queryProductBySearch,
+  queryAllGenres,
+} from "../db/query.js";
 
 export const getHomePage = (req, res) => {
   res.render("index", {
@@ -8,15 +13,19 @@ export const getHomePage = (req, res) => {
 };
 
 export const getInventoryList = async (req, res) => {
-  console.log(req.query.genre);
   try {
-  const products = await queryAllInventory();
-  const genres = await queryAllGenres();
+    let products;
+    if (req.query.genre != undefined || req.query.sort != undefined) {
+      products = await queryInventoryByFilter(req.query);
+    } else {
+      products = await queryAllInventory();
+    }
+    const genres = await queryAllGenres();
     res.render("inventory", {
       title: "Inventory",
       products: products,
       genres: genres,
-      queries: req.query.genre,
+      queries: req.query,
     });
   } catch (err) {
     console.error(err);
