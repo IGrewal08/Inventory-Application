@@ -7,7 +7,14 @@
 </head>
 <body>
     <%- include('partials/header') %>
-    
+    <a href="#">Add</a>
+     <ul>
+          Genres: <% genres.forEach(genre => { %>
+          <li>
+            <a href="/inventory?sort=&genre=<%= genre.name %>"><%= genre.name %></a>
+          </li>
+          <% }); %>
+        </ul>
     <%- include('partials/footer') %>
 </body>
 </html>

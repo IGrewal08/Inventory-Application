@@ -7,7 +7,18 @@
 </head>
 <body>
     <%- include('partials/header') %>
-    
+    <img src="#" rel="image of product" />
+    <div>
+    <div><%= product.name %></div>
+    <div>$<%= product.price %></div>
+    </div>
+    <div><%= product.quantity %></div>
+    <div><%= product.developers %></div>
+    <div><%= product.genres %></div>
+    <div>
+        <a href="/product/<%= product.name %>/edit">Edit</a>
+        <a href="/product/<%= product.name %>/delete">Delete</a>
+    </div>
     <%- include('partials/footer') %>
 </body>
 </html>

@@ -13,6 +13,14 @@ export const getHomePage = (req, res) => {
 };
 
 export const getInventoryList = async (req, res) => {
+  const sorts = [
+    { value: undefined, message: "Relevance" },
+    { value: "name_ASC", message: "Name A-Z" },
+    { value: "name_DESC", message: "Name Z-A" },
+    { value: "price_DESC", message: "Price $$$-$" },
+    { value: "price_ASC", message: "Price $-$$$" },
+  ];
+
   try {
     let products;
     if (req.query.genre != undefined || req.query.sort != undefined) {
@@ -25,6 +33,7 @@ export const getInventoryList = async (req, res) => {
       title: "Inventory",
       products: products,
       genres: genres,
+      sorts: sorts,
       queries: req.query,
     });
   } catch (err) {
@@ -46,7 +55,9 @@ export const getInventorySearch = async (req, res) => {
 };
 
 export const getCategories = async (req, res) => {
+  const genres = await queryAllGenres();
   res.render("category", {
     title: "Categories",
+    genres: genres,
   });
 };

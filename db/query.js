@@ -23,16 +23,17 @@ export const queryAllGenres = async () => {
   return rows;
 };
 
-
 /* Alt way to placeholders */
 export const queryInventoryByFilter = async (query) => {
   const { genre, sort } = query;
-  let filterQuery = '';
-  let sortQuery = '';
+  let filterQuery = "";
+  let sortQuery = "";
 
   if (genre != undefined) {
-    let queryLength = (!Array.isArray(genre)) ? 1 : Object.keys(genre).length;
-    let genreString = (!Array.isArray(genre)) ? `= '${genre}'` :` IN (${genre.map((element) => `'${element}'`).join(", ")})`;
+    let queryLength = !Array.isArray(genre) ? 1 : Object.keys(genre).length;
+    let genreString = !Array.isArray(genre)
+      ? `= '${genre}'`
+      : ` IN (${genre.map((element) => `'${element}'`).join(", ")})`;
     filterQuery = `WHERE game_name IN (SELECT ga.game_name
         FROM developers d
         JOIN game_developers gd USING (developer_id)
@@ -42,17 +43,22 @@ export const queryInventoryByFilter = async (query) => {
         WHERE genre_name ${genreString}
         GROUP By game_name
         HAVING COUNT(DISTINCT genre_name) = ${queryLength})
-    `
+    `;
   }
 
   if (sort != undefined) {
     const column = sort.split("_");
-    const allowedSorts = ['price', 'name', 'ASC', 'DESC'];
+    const allowedSorts = ["price", "name", "ASC", "DESC"];
     if (allowedSorts.includes(column[0]) && allowedSorts.includes(column[1])) {
       sortQuery = ` ORDER BY ${column[0]} ${column[1]};`;
     }
   }
-  const { rows } = await pool.query(myQuery + filterQuery + 'GROUP BY game_name, game_price, game_quantity' + sortQuery);
+  const { rows } = await pool.query(
+    myQuery +
+      filterQuery +
+      "GROUP BY game_name, game_price, game_quantity" +
+      sortQuery
+  );
   return rows;
 };
 
@@ -62,6 +68,11 @@ export const queryProductBySearch = async (search) => {
     `;
 
   const { rows } = await pool.query(myQuery + updatedQuery, [`%${search}%`]);
+  return rows;
+};
+
+export const queryGetProduct = async (product) => {
+  const { rows } = await pool.query(myQuery + "WHERE game_name = $1 GROUP BY game_name, game_price, game_quantity;", [product]);
   return rows;
 };
 

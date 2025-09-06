@@ -7,7 +7,7 @@ const inventoryRouter = Router();
 inventoryRouter.get("/", inventoryController.getHomePage);
 inventoryRouter.get("/inventory", inventoryController.getInventoryList);
 inventoryRouter.get("/inventory/list", inventoryController.getInventorySearch);
-inventoryRouter.get("category", inventoryController.getCategories);
+inventoryRouter.get("/categories", inventoryController.getCategories);
 
 inventoryRouter.get("/product/:name", productController.getProduct); // when you click a product card, or, once searching and clicking product card
 inventoryRouter.post("/product/:name", productController.postProduct); // when you add a new product

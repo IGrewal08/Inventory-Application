@@ -11,7 +11,7 @@
         <% if(locals.products) %>
         <% products.forEach(product => {  %>
             <li>
-                <a href="LINK TO PAGE">
+                <a href="/product/<%= product.name %>">
                     <img src="#" rel="image of product">
                     <div>
                         <div><%= product.name %></div>
@@ -20,9 +20,7 @@
                     <div><%= product.quantity %></div>
                     <div><%= product.developers %></div>
                     <div><%= product.genres %></div>
-                </a>   
-                <a href="/product/<%= product.name %>/edit">Edit</a>
-                <a href="/product/<%= product.name %>/edit">Delete</a>
+                </a>
             </li>
         <% }); %>
     </ul>
