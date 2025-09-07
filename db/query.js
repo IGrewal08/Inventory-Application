@@ -8,7 +8,7 @@ JOIN games ga USING (game_id)
 JOIN game_genres gg using (game_id)
 JOIN genres ge USING (genre_id)
 `;
-
+/* All Items from tables */
 export const queryAllInventory = async () => {
   const { rows } = await pool.query(
     myQuery + "GROUP BY game_name, game_price, game_quantity;"
@@ -18,31 +18,41 @@ export const queryAllInventory = async () => {
 
 export const queryAllGenres = async () => {
   const { rows } = await pool.query(
-    "SELECT DISTINCT genre_name as name FROM genres"
+    "SELECT DISTINCT genre_id as id, genre_name as name FROM genres"
   );
   return rows;
 };
 
-/* Alt way to placeholders */
+export const queryAllDevelopers = async () => {
+  const { rows } = await pool.query(
+    "SELECT DISTINCT developer_id as id, developer_name as name FROM developers"
+  );
+  return rows;
+}
+
+/* Sort and Filter */
 export const queryInventoryByFilter = async (query) => {
   const { genre, sort } = query;
   let filterQuery = "";
   let sortQuery = "";
 
+  let genreArray = [];
+
   if (genre != undefined) {
-    let queryLength = !Array.isArray(genre) ? 1 : Object.keys(genre).length;
-    let genreString = !Array.isArray(genre)
-      ? `= '${genre}'`
-      : ` IN (${genre.map((element) => `'${element}'`).join(", ")})`;
     filterQuery = `WHERE game_name IN (SELECT ga.game_name
         FROM developers d
         JOIN game_developers gd USING (developer_id)
         JOIN games ga USING (game_id)
         JOIN game_genres gg using (game_id)
         JOIN genres ge USING (genre_id)
-        WHERE genre_name ${genreString}
-        GROUP By game_name
-        HAVING COUNT(DISTINCT genre_name) = ${queryLength})
+    `;
+
+    !Array.isArray(genre) ? genreArray.push(genre) : (genreArray = [...genre]);
+    const dynamicPlaceHolder = genreArray
+      .map((element, index) => "genre_name = $" + (index + 1))
+      .join(" OR ");
+    filterQuery += `WHERE ${dynamicPlaceHolder}
+        GROUP By game_name)
     `;
   }
 
@@ -53,13 +63,25 @@ export const queryInventoryByFilter = async (query) => {
       sortQuery = ` ORDER BY ${column[0]} ${column[1]};`;
     }
   }
-  const { rows } = await pool.query(
-    myQuery +
-      filterQuery +
-      "GROUP BY game_name, game_price, game_quantity" +
-      sortQuery
-  );
-  return rows;
+
+  if (filterQuery.length != 0) {
+    const { rows } = await pool.query(
+      myQuery +
+        filterQuery +
+        "GROUP BY game_name, game_price, game_quantity" +
+        sortQuery,
+      [...genreArray]
+    );
+    return rows;
+  } else {
+    const { rows } = await pool.query(
+      myQuery +
+        filterQuery +
+        "GROUP BY game_name, game_price, game_quantity" +
+        sortQuery
+    );
+    return rows;
+  }
 };
 
 export const queryProductBySearch = async (search) => {
@@ -71,9 +93,15 @@ export const queryProductBySearch = async (search) => {
   return rows;
 };
 
+/* Individual Items */
 export const queryGetProduct = async (product) => {
-  const { rows } = await pool.query(myQuery + "WHERE game_name = $1 GROUP BY game_name, game_price, game_quantity;", [product]);
-  return rows;
+  const { rows } = await pool.query(
+    myQuery +
+      `WHERE game_name = $1 
+      GROUP BY game_name, game_price, game_quantity;`,
+    [product]
+  );
+  return rows[0];
 };
 
 export const queryUpdateProduct = async (product, data) => {};
@@ -89,3 +117,7 @@ export const queryDeleteProduct = async (product) => {
   );
   await pool.query(deleteQuery, [productId]);
 };
+
+export const queryPostGenre = async (genre) => {
+  await pool.query('INSERT INTO genres (genre_name) VALUES ($1)', [genre]);
+}

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><% title %></title>
+    <title><%= title %></title>
   </head>
   <body>
     <%- include('partials/header') %>
@@ -63,8 +63,8 @@
               <div>$<%= product.price %></div>
             </div>
             <div><%= product.quantity %></div>
-            <div><%= product.developers %></div>
-            <div><%= product.genres %></div>
+            <div><%= (product.developers != undefined) ? product.developers : (N/A) %></div>
+            <div><%= (product.genres != undefined) ? product.genres : (N/A) %></div>
           </a>
         </li>
         <% }); %>

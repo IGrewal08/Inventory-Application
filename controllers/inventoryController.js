@@ -4,6 +4,7 @@ import {
   queryInventoryByFilter,
   queryProductBySearch,
   queryAllGenres,
+  queryPostGenre,
 } from "../db/query.js";
 
 export const getHomePage = (req, res) => {
@@ -60,4 +61,19 @@ export const getCategories = async (req, res) => {
     title: "Categories",
     genres: genres,
   });
+};
+
+export const getCategoriesForm = async (req, res) => {
+  if (req.method === "GET") {
+    res.render("categoryForm", {
+      title: "Add Category",
+    });
+  } else if (req.method === "POST") {
+    try {
+      await queryPostGenre(req.body.genre);
+      res.redirect("/inventory");
+    } catch (err) {
+      console.err(err);
+    }
+  }
 };

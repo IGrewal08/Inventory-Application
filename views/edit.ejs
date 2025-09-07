@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <form action="/product/<%= name %>/edit" method="PUT">
+        <label for="title">
+            Title:
+            <input type="text" name="name" id="name" value="<%= product.name %>" required>
+        </label>
+        <label for="price">
+            Price:
+            <input type="number" min="0" name="price" id="price" value="<%= product.price %>" required>
+        </label>
+        <label for="quantity">
+            Quantity:
+            <input type="number" step="1" min="0" name="quantity" value="<%= product.quantity %>" required>
+        </label>
+        <% for (let i=0; i <= 2; i++) { %>
+            <select>
+                <option name="developer_0" selected>-</option>
+                <% developers.map(developer => { %>
+                    <% if (productDevelopers[i] != undefined && productDevelopers[i] === developer.name) { %>
+                        <option name="developer_<%= developer.id%>" value="<%= developer.name %>" selected><%= developer.name %></option>
+                    <% } else { %>
+                        <option name="developer_<%= developer.id%>" value="<%= developer.name %>"><%= developer.name %></option>
+                    <% } %>
+                <% });%>
+            </select>
+        <% } %>
+        <% for (let i=0; i <= 2; i++) { %>
+            <select>
+                <option name="genre_0" selected>-</option>
+                <% genres.map(genre => { %>
+                    <% if (productGenres[i] != undefined && productGenres[i] === genre.name) { %>
+                        <option name="genre_<%= genre.id%>" value="<%= genre.name %>" selected><%= genre.name %></option>
+                        <% } else { %>
+                       <option name="genre_<%= genre.id%>" value="<%= genre.name %>"><%= genre.name %></option>
+                        <% } %>
+                <% });%>
+            </select>
+        <% } %>
+    </form>
+    <%- include('partials/footer') %>
+</body>
+</html>

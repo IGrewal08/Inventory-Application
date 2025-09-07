@@ -7,14 +7,13 @@
 </head>
 <body>
     <%- include('partials/header') %>
-    <a href="/categories/add">Add</a>
-     <ul>
-          Genres: <% genres.forEach(genre => { %>
-          <li>
-            <a href="/inventory?sort=&genre=<%= genre.name %>"><%= genre.name %></a>
-          </li>
-          <% }); %>
-        </ul>
+    <form action="/categories/add" method="POST">
+        <label for="name" >
+            Category Name: 
+          <input type="text" name="genre" id="genre" placeholder="ex. Sports">  
+        </label>
+        <button type="submit">Add</button>
+    </form>
     <%- include('partials/footer') %>
 </body>
 </html>
