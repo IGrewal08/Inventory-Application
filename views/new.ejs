@@ -7,14 +7,14 @@
   </head>
   <body>
     <%- include('partials/header') %>
-    <form action="/product/<%= name %>/edit" method="POST">
+    <form action="/product/new" method="POST">
       <label for="title">
         Title:
         <input
           type="text"
           name="name"
           id="name"
-          value="<%= product.name %>"
+          placeholder="ex. Skyrim"
           required
         />
       </label>
@@ -26,7 +26,7 @@
           min="0"
           name="price"
           id="price"
-          value="<%= product.price %>"
+          placeholder="ex. 69.99"
           required
         />
       </label>
@@ -37,7 +37,7 @@
           step="1"
           min="0"
           name="quantity"
-          value="<%= product.quantity %>"
+          placeholder="ex. 100"
           required
         />
       </label>
@@ -50,88 +50,56 @@
           type="text"
           minlength="1"
           maxlength="250"
-          name="description"
-          value="<%= product.description %>"
+          placeholder="ex. In the provence of Skyrim, land of the Nords, where the Dragonborn fights against dragons through the power of shouts"
           required
-        >
-<%= product.description %></textarea
-        >
+        ></textarea>
       </label>
       <label>
-        Developers: 
+        Developers:
         <select name="developer">
-          <% developers.map(developer => { %> <% if (productDevelopers[0] !=
-          undefined && productDevelopers[0] === developer.name) { %>
-          <option
-            name="developer_<%= developer.id%>"
-            value="<%= developer.id %>"
-            selected
-          >
-            <%= developer.name %>
-          </option>
-          <% } else { %>
+          <% developers.map(developer => { %>
           <option
             name="developer_<%= developer.id%>"
             value="<%= developer.id %>"
           >
             <%= developer.name %>
           </option>
-          <% } %> <% });%>
+          <% });%>
         </select>
-        <% for (let i=1; i <= 2; i++) { %>
+        <% for (let i=0; i <= 1; i++) { %>
         <select name="developer">
           <option name="developer_0" selected>-</option>
-          <% developers.map(developer => { %> <% if (productDevelopers[i] !=
-          undefined && productDevelopers[i] === developer.name) { %>
-          <option
-            name="developer_<%= developer.id%>"
-            value="<%= developer.id %>"
-            selected
-          >
-            <%= developer.name %>
-          </option>
-          <% } else { %>
+          <% developers.map(developer => { %>
           <option
             name="developer_<%= developer.id%>"
             value="<%= developer.id %>"
           >
             <%= developer.name %>
           </option>
-          <% } %> <% });%>
+          <% });%>
         </select>
         <% } %>
       </label>
       <label>
-        Genres: 
+        Genres:
         <select name="genre">
-          <% genres.map(genre => { %> <% if (productGenres[0] != undefined &&
-          productGenres[0] === genre.name) { %>
-          <option name="genre_<%= genre.id%>" value="<%= genre.id %>" selected>
-            <%= genre.name %>
-          </option>
-          <% } else { %>
+          <% genres.map(genre => { %>
           <option name="genre_<%= genre.id%>" value="<%= genre.id %>">
             <%= genre.name %>
           </option>
-          <% } %> <% });%>
+          <% });%>
         </select>
-        <% for (let i=1; i <= 2; i++) { %>
+        <% for (let i=0; i <= 1; i++) { %>
         <select name="genre">
           <option name="genre_0" selected>-</option>
-          <% genres.map(genre => { %> <% if (productGenres[i] != undefined &&
-          productGenres[i] === genre.name) { %>
-          <option name="genre_<%= genre.id%>" value="<%= genre.id %>" selected>
-            <%= genre.name %>
-          </option>
-          <% } else { %>
+          <% genres.map(genre => { %>
           <option name="genre_<%= genre.id%>" value="<%= genre.id %>">
             <%= genre.name %>
           </option>
-          <% } %> <% });%>
+          <% });%>
         </select>
         <% } %>
       </label>
-      <input type="hidden" name="_name" id="name" value="<%= product.name %>" />
       <button type="submit">Add</button>
     </form>
     <%- include('partials/footer') %>

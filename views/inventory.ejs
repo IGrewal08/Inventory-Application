@@ -49,10 +49,39 @@
           </li>
           <% }); %>
         </ul>
-        <button type="submit">Submit</button>
+        <ul>
+          Developers: <% developers.forEach(developer => { %>
+          <li>
+            <label>
+              <% if (queries.developer != undefined &&
+              queries.developer.includes(developer.name)) { %>
+              <input
+                type="checkbox"
+                name="developer"
+                id="<%= developer.name %>"
+                value="<%= developer.name %>"
+                checked
+              />
+              <% } else { %>
+              <input
+                type="checkbox"
+                name="developer"
+                id="<%= developer.name %>"
+                value="<%= developer.name %>"
+              />
+              <% } %> <%= developer.name %>
+            </label>
+          </li>
+          <% }); %>
+        </ul>
+        <button type="submit">Filter</button>
       </form>
     </nav>
+    <a href="/product/new">Add Product</a>
     <main>
+      <% if(products.length === 0) { %>
+        <div>No Matching Results Based On Applied Filters!</div>
+      <% } else { %>
       <ul>
         <% products.forEach(product => { %>
         <li>
@@ -69,6 +98,7 @@
         </li>
         <% }); %>
       </ul>
+      <% } %>
     </main>
     <%- include('partials/footer') %>
   </body>

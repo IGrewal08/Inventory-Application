@@ -7,10 +7,10 @@
 </head>
 <body>
     <%- include('partials/header') %>
-    <form action="/categories/add" method="POST">
+    <form action="/categories/add/<%= type %>" method="POST">
         <label for="name" >
-            Category Name: 
-          <input type="text" name="genre" id="genre" placeholder="ex. Sports">  
+            New <%= type %> name: 
+          <input type="text" name="<%= type %>" id="<%= type %>" placeholder="ex. Sports or Mojang Studios">  
         </label>
         <button type="submit">Add</button>
     </form>

@@ -7,11 +7,19 @@
 </head>
 <body>
     <%- include('partials/header') %>
-    <a href="/categories/add">Add</a>
+    <a href="/categories/add/genre">Add</a>
      <ul>
           Genres: <% genres.forEach(genre => { %>
           <li>
             <a href="/inventory?sort=&genre=<%= genre.name %>"><%= genre.name %></a>
+          </li>
+          <% }); %>
+        </ul>
+      <a href="/categories/add/developer">Add</a>
+        <ul>
+          Developers: <% developers.forEach(developer => { %>
+          <li>
+            <a href="/inventory?sort=&developer=<%= developer.name %>"><%= developer.name %></a>
           </li>
           <% }); %>
         </ul>

@@ -25,6 +25,9 @@ export const getEditProduct = async (req, res) => {
       const productDevelopers = product.developers.includes(",")
         ? product.developers.split(", ")
         : [product.developers];
+      const productGenres = product.genres.includes(",")
+        ? product.genres.split(", ")
+        : [product.genres];
       res.render("edit", {
         title: "Edit",
         name: name,
@@ -34,26 +37,43 @@ export const getEditProduct = async (req, res) => {
         developers: developers,
         genres: genres,
       });
-      const productGenres = product.genres.includes(",")
-        ? product.genres.split(", ")
-        : [product.genres];
-    } else if (req.method === "PUT") {
+    } else if (req.method === "POST") {
+      console.log('test');
+      await db.queryUpdateProduct(req.body);
+      res.redirect("/inventory");
     }
   } catch (err) {
-    console.err(err);
+    console.error(err);
   }
 };
 
 export const deleteProduct = async (req, res) => {
   const product = req.body;
-  await db.queryDeleteProduct(product);
+  try {
+    await db.queryDeleteProduct(product);
   res.status(204).send();
   res.redirect("/inventory");
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-export const getNewProductForm = (req, res) => {
-  const {} = req.body;
-  res.redirect("/inventory");
+export const getNewProductForm = async (req, res) => {
+  try {
+    const genres = await db.queryAllGenres();
+    const developers = await db.queryAllDevelopers();
+    if (req.method === 'GET') {
+      res.render('new', {
+        title: 'New',
+        genres: genres,
+        developers: developers,
+      });
+    } else if (req.method === 'POST') {
+      console.log(req.body);
+      await db.queryPostNewProduct(req.body);
+      res.redirect('/inventory');
+    }
+  } catch (err) {
+    console.error(err);
+  }
 };
-
-export const postNewProduct = (req, res) => {};

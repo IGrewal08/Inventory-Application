@@ -1,11 +1,5 @@
 import { body, validationResult } from "express-validator";
-import {
-  queryAllInventory,
-  queryInventoryByFilter,
-  queryProductBySearch,
-  queryAllGenres,
-  queryPostGenre,
-} from "../db/query.js";
+import * as db from "../db/query.js";
 
 export const getHomePage = (req, res) => {
   res.render("index", {
@@ -25,14 +19,17 @@ export const getInventoryList = async (req, res) => {
   try {
     let products;
     if (req.query.genre != undefined || req.query.sort != undefined) {
-      products = await queryInventoryByFilter(req.query);
+      products = await db.queryInventoryByFilter(req.query);
     } else {
-      products = await queryAllInventory();
+      products = await db.queryAllInventory();
     }
-    const genres = await queryAllGenres();
+    const developers = await db.queryAllDevelopers();
+    const genres = await db.queryAllGenres();
+    console.log(products);
     res.render("inventory", {
       title: "Inventory",
       products: products,
+      developers: developers,
       genres: genres,
       sorts: sorts,
       queries: req.query,
@@ -45,7 +42,7 @@ export const getInventoryList = async (req, res) => {
 export const getInventorySearch = async (req, res) => {
   const { search } = req.query;
   try {
-    const products = await queryProductBySearch(search);
+    const products = await db.queryProductBySearch(search);
     res.render("search", {
       title: "Search",
       products: products,
@@ -56,24 +53,35 @@ export const getInventorySearch = async (req, res) => {
 };
 
 export const getCategories = async (req, res) => {
-  const genres = await queryAllGenres();
-  res.render("category", {
-    title: "Categories",
-    genres: genres,
-  });
+  try {
+    const genres = await db.queryAllGenres();
+    const developers = await db.queryAllDevelopers();
+    res.render("category", {
+      title: "Categories",
+      genres: genres,
+      developers: developers,
+    });
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 export const getCategoriesForm = async (req, res) => {
   if (req.method === "GET") {
     res.render("categoryForm", {
       title: "Add Category",
+      type: req.params.type,
     });
   } else if (req.method === "POST") {
     try {
-      await queryPostGenre(req.body.genre);
+      if (req.params.type === 'genre') {
+        await db.queryPostGenre(req.body.genre);
+      } else if (req.params.type === 'developer') {
+        await db.queryPostDeveloper(req.body.developer);
+      }
       res.redirect("/inventory");
     } catch (err) {
-      console.err(err);
+      console.error(err);
     }
   }
 };
