@@ -4,9 +4,12 @@
 }
 
 header,
-main,
 footer {
-    padding: 1.25rem 6rem;
+    padding: 0.75rem 7.5rem;
+}
+
+main {
+    margin: 1rem 7.5rem;
 }
 
 li {
@@ -19,7 +22,10 @@ a {
 }
 
 :root {
-    background-color: white;
+    --secondary-color: #84cbd9;
+    --font-color: #0b0b0b;
+    --highlight-color: #0092b2;
+    --header-padding: 0.5rem;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -30,10 +36,11 @@ body {
 }
 
 header {
-    background-color: dodgerblue;
+    background-color: var(--secondary-color);
     display: flex;
     justify-content: space-between;
     font-size: 16px;
+    align-items: center;
 }
 
 header nav,
@@ -41,12 +48,46 @@ header ul {
     display: flex;
     gap: 2rem;
 }
+header a,
+footer a {
+    color: var(--font-color)
+}
+
+#search {
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    padding: var(--header-padding);
+    margin: 0 var(--header-padding);
+    width: 15rem;
+    height: 1rem;
+}
+
+header button {
+    padding: var(--header-padding);
+    background-color: var(--secondary-color);
+    border: 1px solid var(--highlight-color);
+    border-radius: 8px;
+    color: var(--highlight-color);
+    font-size: 16px;
+}
+
+header button:hover {
+    background-color: var(--highlight-color);
+    color: #ffffff;
+}
 
 main {
     flex-grow: 1;
-    background-color: antiquewhite;
+}
+
+#main_index > * {
+    border: 1px solid black;
 }
 
 footer {
-    background-color: dodgerblue;
+    background-color: var(--secondary-color);
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    color: #ffffff;
 }

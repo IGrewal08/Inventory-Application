@@ -4,101 +4,111 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/inventory.css" />
   </head>
   <body>
     <%- include('partials/header') %>
-    <nav>
-      <form name="sortFilter" action="/inventory" method="GET">
-        <label>
-          Sort:
-          <select onchange="sortFilter.submit()" name="sort">
-            <% sorts.forEach(sort => { %> <% if (queries.sort != undefined &&
-            queries.sort.includes(sort.message)) { %>
-            <option name="sort" value="<%= sort.value %>" selected>
-              <%= sort.message %>
-            </option>
-            <% } else { %>
-            <option name="sort" value="<%= sort.value %>">
-              <%= sort.message %>
-            </option>
-            <% }%> <% }); %>
-          </select>
-        </label>
-        <ul>
-          Genres: <% genres.forEach(genre => { %>
-          <li>
-            <label>
-              <% if (queries.genre != undefined &&
-              queries.genre.includes(genre.name)) { %>
-              <input
-                type="checkbox"
-                name="genre"
-                id="<%= genre.name %>"
-                value="<%= genre.name %>"
-                checked
-              />
-              <% } else { %>
-              <input
-                type="checkbox"
-                name="genre"
-                id="<%= genre.name %>"
-                value="<%= genre.name %>"
-              />
-              <% } %> <%= genre.name %>
-            </label>
-          </li>
-          <% }); %>
-        </ul>
-        <ul>
-          Developers: <% developers.forEach(developer => { %>
-          <li>
-            <label>
-              <% if (queries.developer != undefined &&
-              queries.developer.includes(developer.name)) { %>
-              <input
-                type="checkbox"
-                name="developer"
-                id="<%= developer.name %>"
-                value="<%= developer.name %>"
-                checked
-              />
-              <% } else { %>
-              <input
-                type="checkbox"
-                name="developer"
-                id="<%= developer.name %>"
-                value="<%= developer.name %>"
-              />
-              <% } %> <%= developer.name %>
-            </label>
-          </li>
-          <% }); %>
-        </ul>
-        <button type="submit">Filter</button>
-      </form>
-    </nav>
-    <a href="/product/new">Add Product</a>
     <main>
-      <% if(products.length === 0) { %>
+      <div id="heading">
+        <h1>Inventory</h1>
+        <a href="/product/new">Add a Product</a>
+      </div>
+      <div id="content">
+        <form name="sortFilter" action="/inventory" method="GET">
+          <label>
+            Sort:
+            <select onchange="sortFilter.submit()" name="sort">
+              <% sorts.forEach(sort => { %> <% if (queries.sort != undefined &&
+              queries.sort.includes(sort.message)) { %>
+              <option name="sort" value="<%= sort.value %>" selected>
+                <%= sort.message %>
+              </option>
+              <% } else { %>
+              <option name="sort" value="<%= sort.value %>">
+                <%= sort.message %>
+              </option>
+              <% }%> <% }); %>
+            </select>
+          </label>
+          <ul>
+            Genres: <% genres.forEach(genre => { %>
+            <li>
+              <label>
+                <% if (queries.genre != undefined &&
+                queries.genre.includes(genre.name)) { %>
+                <input
+                  type="checkbox"
+                  name="genre"
+                  id="<%= genre.name %>"
+                  value="<%= genre.name %>"
+                  checked
+                />
+                <% } else { %>
+                <input
+                  type="checkbox"
+                  name="genre"
+                  id="<%= genre.name %>"
+                  value="<%= genre.name %>"
+                />
+                <% } %> <%= genre.name %>
+              </label>
+            </li>
+            <% }); %>
+          </ul>
+          <ul>
+            Developers: <% developers.forEach(developer => { %>
+            <li>
+              <label>
+                <% if (queries.developer != undefined &&
+                queries.developer.includes(developer.name)) { %>
+                <input
+                  type="checkbox"
+                  name="developer"
+                  id="<%= developer.name %>"
+                  value="<%= developer.name %>"
+                  checked
+                />
+                <% } else { %>
+                <input
+                  type="checkbox"
+                  name="developer"
+                  id="<%= developer.name %>"
+                  value="<%= developer.name %>"
+                />
+                <% } %> <%= developer.name %>
+              </label>
+            </li>
+            <% }); %>
+          </ul>
+          <button type="submit">Filter</button>
+        </form>
+        <% if(products.length === 0) { %>
         <div>No Matching Results Based On Applied Filters!</div>
-      <% } else { %>
-      <ul>
-        <% products.forEach(product => { %>
-        <li>
-          <a href="/product/<%= product.name %>">
-            <img src="#" rel="image of product" />
-            <div>
-              <div><%= product.name %></div>
-              <div>$<%= product.price %></div>
-            </div>
-            <div><%= product.quantity %></div>
-            <div><%= (product.developers != undefined) ? product.developers : (N/A) %></div>
-            <div><%= (product.genres != undefined) ? product.genres : (N/A) %></div>
-          </a>
-        </li>
-        <% }); %>
-      </ul>
-      <% } %>
+        <% } else { %>
+        <ul id="inventory">
+          <% products.forEach(product => { %>
+          <li>
+            <a href="/product/<%= product.name %>">
+              <img src="#" rel="image of product" />
+              <div>
+                <div><%= product.name %></div>
+                <div>$<%= product.price %></div>
+              </div>
+              <div><%= product.quantity %></div>
+              <div>
+                <%= (product.developers != undefined) ? product.developers :
+                (N/A) %>
+              </div>
+              <div>
+                <%= (product.genres != undefined) ? product.genres : (N/A) %>
+              </div>
+            </a>
+          </li>
+          <% }); %>
+        </ul>
+        <% } %>
+      </div>
     </main>
     <%- include('partials/footer') %>
   </body>
