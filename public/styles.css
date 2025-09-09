@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header,
+main,
+footer {
+    padding: 1.25rem 6rem;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+:root {
+    background-color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: dodgerblue;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+}
+
+header nav,
+header ul {
+    display: flex;
+    gap: 2rem;
+}
+
+main {
+    flex-grow: 1;
+    background-color: antiquewhite;
+}
+
+footer {
+    background-color: dodgerblue;
+}

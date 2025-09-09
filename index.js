@@ -7,10 +7,10 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename); 
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/', inventoryRouter);
-
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -22,8 +22,3 @@ app.listen(PORT, 'localhost', (error) => {
     }
     console.log(`Express app listening on port ${PORT}`);
 });
-
-/*
-    feat.
-    error page: handle custom errors / broken routes
-*/

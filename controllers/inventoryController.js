@@ -25,7 +25,6 @@ export const getInventoryList = async (req, res) => {
     }
     const developers = await db.queryAllDevelopers();
     const genres = await db.queryAllGenres();
-    console.log(products);
     res.render("inventory", {
       title: "Inventory",
       products: products,
