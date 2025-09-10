@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
-</head>
-<body>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/search.css" />
+  </head>
+  <body>
     <%- include('partials/header') %>
-    <ul>
-        <% if(locals.products) %>
-        <% products.forEach(product => {  %>
-            <li>
-                <a href="/product/<%= product.name %>">
-                    <img src="#" rel="image of product">
-                    <div>
-                        <div><%= product.name %></div>
-                        <div>$<%= product.price %></div>
-                    </div>
-                    <div><%= product.quantity %></div>
-                    <div><%= product.developers %></div>
-                    <div><%= product.genres %></div>
-                </a>
-            </li>
+    <main>
+      <ul id="product_search_list">
+        <% if(locals.products) %> <% products.forEach(product => { %>
+        <li id="product_search_card">
+          <a href="/product/<%= product.name %>">
+            <div id="product_search_image_container">
+              <img
+                src="/img/Assassin's_Creed_Shadows.jpeg"
+                rel="image of <%= product.name %>"
+                id="product_search_image"
+              />
+            </div>
+            <div id="product_search_description">
+              <h3><%= product.name %></h3>
+              <h4>$<%= product.price %></h4>
+              <h5>Developers: <%= product.developers %></h5>
+              <h5>Genres: <%= product.genres %></h5>
+              <h5>Quantity: <%= product.quantity %></h5>
+            </div>
+          </a>
+        </li>
         <% }); %>
-    </ul>
+      </ul>
+    </main>
     <%- include('partials/footer') %>
-</body>
+  </body>
 </html>

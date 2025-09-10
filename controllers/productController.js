@@ -38,7 +38,7 @@ export const getEditProduct = async (req, res) => {
         genres: genres,
       });
     } else if (req.method === "POST") {
-      console.log('test');
+      console.log("test");
       await db.queryUpdateProduct(req.body);
       res.redirect("/inventory");
     }
@@ -51,8 +51,8 @@ export const deleteProduct = async (req, res) => {
   const product = req.body;
   try {
     await db.queryDeleteProduct(product);
-  res.status(204).send();
-  res.redirect("/inventory");
+    res.status(204).send();
+    res.redirect("/inventory");
   } catch (err) {
     console.error(err);
   }
@@ -62,16 +62,16 @@ export const getNewProductForm = async (req, res) => {
   try {
     const genres = await db.queryAllGenres();
     const developers = await db.queryAllDevelopers();
-    if (req.method === 'GET') {
-      res.render('new', {
-        title: 'New',
+    if (req.method === "GET") {
+      res.render("new", {
+        title: "New",
         genres: genres,
         developers: developers,
       });
-    } else if (req.method === 'POST') {
+    } else if (req.method === "POST") {
       console.log(req.body);
       await db.queryPostNewProduct(req.body);
-      res.redirect('/inventory');
+      res.redirect("/inventory");
     }
   } catch (err) {
     console.error(err);

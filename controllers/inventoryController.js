@@ -73,9 +73,9 @@ export const getCategoriesForm = async (req, res) => {
     });
   } else if (req.method === "POST") {
     try {
-      if (req.params.type === 'genre') {
+      if (req.params.type === "genre") {
         await db.queryPostGenre(req.body.genre);
-      } else if (req.params.type === 'developer') {
+      } else if (req.params.type === "developer") {
         await db.queryPostDeveloper(req.body.developer);
       }
       res.redirect("/inventory");

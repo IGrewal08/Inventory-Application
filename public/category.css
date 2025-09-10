@@ -1,0 +1,35 @@
+.content_categories {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+  gap: 1rem;
+}
+
+.category_link {
+  border: 1px solid var(--border-dark-color);
+  border-radius: 1rem;
+  padding: 1em;
+  max-width: 10rem;
+  text-align: center;
+}
+
+.category_link:hover {
+  background-color: var(--secondary-color);
+}
+
+.filter_links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.filter_links > li {
+  border-radius: 1rem;
+  background-color: var(--form-color);
+  padding: 1rem 2rem;
+}
+
+.filter_links > li:hover {
+  background-color: var(--form-color);
+  box-shadow: 0 0 5px black;
+}

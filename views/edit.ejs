@@ -4,136 +4,159 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/product_edit.css" />
   </head>
   <body>
     <%- include('partials/header') %>
-    <form action="/product/<%= name %>/edit" method="POST">
-      <label for="title">
-        Title:
+    <main>
+      <form
+        action="/product/<%= name %>/edit"
+        method="POST"
+        id="product_edit_form"
+      >
+        <div id="primary_filter">
+          <label for="title">
+            Title:
+            <input
+              type="text"
+              name="name"
+              id="name"
+              value="<%= product.name %>"
+              required
+            />
+          </label>
+          <label for="price">
+            Price:
+            <input
+              type="number"
+              step="0.01"
+              min="0"
+              name="price"
+              id="price"
+              value="<%= product.price %>"
+              required
+            />
+          </label>
+          <label for="quantity">
+            Quantity:
+            <input
+              type="number"
+              step="1"
+              min="0"
+              name="quantity"
+              value="<%= product.quantity %>"
+              required
+            />
+          </label>
+        </div>
+        <label for="description" id="description_form">
+          Description:
+          <textarea
+            style="text-align: left"
+            cols="80"
+            rows="1"
+            type="text"
+            minlength="1"
+            maxlength="250"
+            name="description"
+            value="<%= product.description %>"
+            required
+          >
+<%= product.description %></textarea
+          >
+        </label>
+        <label id="developer_form">
+          Developers:
+          <select name="developer">
+            <% developers.map(developer => { %> <% if (productDevelopers[0] !=
+            undefined && productDevelopers[0] === developer.name) { %>
+            <option
+              name="developer_<%= developer.id%>"
+              value="<%= developer.id %>"
+              selected
+            >
+              <%= developer.name %>
+            </option>
+            <% } else { %>
+            <option
+              name="developer_<%= developer.id%>"
+              value="<%= developer.id %>"
+            >
+              <%= developer.name %>
+            </option>
+            <% } %> <% });%>
+          </select>
+          <% for (let i=1; i <= 2; i++) { %>
+          <select name="developer">
+            <option name="developer_0" selected>-</option>
+            <% developers.map(developer => { %> <% if (productDevelopers[i] !=
+            undefined && productDevelopers[i] === developer.name) { %>
+            <option
+              name="developer_<%= developer.id%>"
+              value="<%= developer.id %>"
+              selected
+            >
+              <%= developer.name %>
+            </option>
+            <% } else { %>
+            <option
+              name="developer_<%= developer.id%>"
+              value="<%= developer.id %>"
+            >
+              <%= developer.name %>
+            </option>
+            <% } %> <% });%>
+          </select>
+          <% } %>
+        </label>
+        <label id="genre_form">
+          Genres:
+          <select name="genre">
+            <% genres.map(genre => { %> <% if (productGenres[0] != undefined &&
+            productGenres[0] === genre.name) { %>
+            <option
+              name="genre_<%= genre.id%>"
+              value="<%= genre.id %>"
+              selected
+            >
+              <%= genre.name %>
+            </option>
+            <% } else { %>
+            <option name="genre_<%= genre.id%>" value="<%= genre.id %>">
+              <%= genre.name %>
+            </option>
+            <% } %> <% });%>
+          </select>
+          <% for (let i=1; i <= 2; i++) { %>
+          <select name="genre">
+            <option name="genre_0" selected>-</option>
+            <% genres.map(genre => { %> <% if (productGenres[i] != undefined &&
+            productGenres[i] === genre.name) { %>
+            <option
+              name="genre_<%= genre.id%>"
+              value="<%= genre.id %>"
+              selected
+            >
+              <%= genre.name %>
+            </option>
+            <% } else { %>
+            <option name="genre_<%= genre.id%>" value="<%= genre.id %>">
+              <%= genre.name %>
+            </option>
+            <% } %> <% });%>
+          </select>
+          <% } %>
+        </label>
         <input
-          type="text"
-          name="name"
+          type="hidden"
+          name="_name"
           id="name"
           value="<%= product.name %>"
-          required
         />
-      </label>
-      <label for="price">
-        Price:
-        <input
-          type="number"
-          step="0.01"
-          min="0"
-          name="price"
-          id="price"
-          value="<%= product.price %>"
-          required
-        />
-      </label>
-      <label for="quantity">
-        Quantity:
-        <input
-          type="number"
-          step="1"
-          min="0"
-          name="quantity"
-          value="<%= product.quantity %>"
-          required
-        />
-      </label>
-      <label for="description">
-        Description:
-        <textarea
-          style="text-align: left"
-          cols="20"
-          rows="6"
-          type="text"
-          minlength="1"
-          maxlength="250"
-          name="description"
-          value="<%= product.description %>"
-          required
-        >
-<%= product.description %></textarea
-        >
-      </label>
-      <label>
-        Developers: 
-        <select name="developer">
-          <% developers.map(developer => { %> <% if (productDevelopers[0] !=
-          undefined && productDevelopers[0] === developer.name) { %>
-          <option
-            name="developer_<%= developer.id%>"
-            value="<%= developer.id %>"
-            selected
-          >
-            <%= developer.name %>
-          </option>
-          <% } else { %>
-          <option
-            name="developer_<%= developer.id%>"
-            value="<%= developer.id %>"
-          >
-            <%= developer.name %>
-          </option>
-          <% } %> <% });%>
-        </select>
-        <% for (let i=1; i <= 2; i++) { %>
-        <select name="developer">
-          <option name="developer_0" selected>-</option>
-          <% developers.map(developer => { %> <% if (productDevelopers[i] !=
-          undefined && productDevelopers[i] === developer.name) { %>
-          <option
-            name="developer_<%= developer.id%>"
-            value="<%= developer.id %>"
-            selected
-          >
-            <%= developer.name %>
-          </option>
-          <% } else { %>
-          <option
-            name="developer_<%= developer.id%>"
-            value="<%= developer.id %>"
-          >
-            <%= developer.name %>
-          </option>
-          <% } %> <% });%>
-        </select>
-        <% } %>
-      </label>
-      <label>
-        Genres: 
-        <select name="genre">
-          <% genres.map(genre => { %> <% if (productGenres[0] != undefined &&
-          productGenres[0] === genre.name) { %>
-          <option name="genre_<%= genre.id%>" value="<%= genre.id %>" selected>
-            <%= genre.name %>
-          </option>
-          <% } else { %>
-          <option name="genre_<%= genre.id%>" value="<%= genre.id %>">
-            <%= genre.name %>
-          </option>
-          <% } %> <% });%>
-        </select>
-        <% for (let i=1; i <= 2; i++) { %>
-        <select name="genre">
-          <option name="genre_0" selected>-</option>
-          <% genres.map(genre => { %> <% if (productGenres[i] != undefined &&
-          productGenres[i] === genre.name) { %>
-          <option name="genre_<%= genre.id%>" value="<%= genre.id %>" selected>
-            <%= genre.name %>
-          </option>
-          <% } else { %>
-          <option name="genre_<%= genre.id%>" value="<%= genre.id %>">
-            <%= genre.name %>
-          </option>
-          <% } %> <% });%>
-        </select>
-        <% } %>
-      </label>
-      <input type="hidden" name="_name" id="name" value="<%= product.name %>" />
-      <button type="submit">Add</button>
-    </form>
+        <button type="submit" id="add_form_new">Add</button>
+      </form>
+    </main>
     <%- include('partials/footer') %>
   </body>
 </html>

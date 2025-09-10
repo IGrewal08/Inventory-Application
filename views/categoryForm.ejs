@@ -1,19 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
-</head>
-<body>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/category_edit.css" />
+  </head>
+  <body>
     <%- include('partials/header') %>
-    <form action="/categories/add/<%= type %>" method="POST">
-        <label for="name" >
-            New <%= type %> name: 
-          <input type="text" name="<%= type %>" id="<%= type %>" placeholder="ex. Sports or Mojang Studios">  
+    <main>
+      <a href="/categories" id="return_to_category">< Return to Categories</a>
+      <form
+        action="/categories/add/<%= type %>"
+        method="POST"
+        id="new_category_form"
+      >
+        <h1>New <%= type %> name</h1>
+        <label for="name">
+          <input
+            type="text"
+            name="<%= type %>"
+            id="<%= type %>"
+            placeholder="ex. Sports or Mojang Studios"
+          />
         </label>
         <button type="submit">Add</button>
-    </form>
+      </form>
+    </main>
     <%- include('partials/footer') %>
-</body>
+  </body>
 </html>

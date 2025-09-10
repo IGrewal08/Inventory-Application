@@ -34,54 +34,58 @@ CREATE TABLE IF NOT EXISTS game_genres (
 `;
 
 const sql_games_data = [
-  { name: 'EA Sports FC', price: 69.99, quantity: 30 },
+  { name: "EA Sports FC", price: 69.99, quantity: 30 },
   { name: "Marvel's SpiderMan", price: 49.99, quantity: 50 },
-  { name: 'Grand Turismo 7', price: 69.99, quantity: 80 },
-  { name: 'Stardew Valley', price: 14.99, quantity: 100 },
-  { name: 'Elden Ring', price: 59.99, quantity: 120 },
-  { name: 'The Last of Us Part 2 RE', price: 49.99, quantity: 100 },
-  { name: 'Grand Theft Auto', price: 19.99, quantity: 150 },
-  { name: 'Forza Horizon 5', price: 59.99, quantity: 25 },
+  { name: "Grand Turismo 7", price: 69.99, quantity: 80 },
+  { name: "Stardew Valley", price: 14.99, quantity: 100 },
+  { name: "Elden Ring", price: 59.99, quantity: 120 },
+  { name: "The Last of Us Part 2 RE", price: 49.99, quantity: 100 },
+  { name: "Grand Theft Auto", price: 19.99, quantity: 150 },
+  { name: "Forza Horizon 5", price: 59.99, quantity: 25 },
   { name: "Assassin's Creed Shadows", price: 69.99, quantity: 150 },
-  { name: 'Far Cry 5', price: 59.99, quantity: 125 },
-  { name: 'Kingdom Come: Deliverance 2', price: 69.99, quantity: 200 },
-  { name: 'Dark Souls 2', price: 29.99, quantity: 50 },
-  { name: 'Witcher 3: Wild Hunt', price: 49.99, quantity: 100 },
-  { name: 'Resident Evil 7 biohazard', price: 19.99, quantity: 60 },
-  { name: 'L.A. Noire', price: 19.99, quantity: 25 },
+  { name: "Far Cry 5", price: 59.99, quantity: 125 },
+  { name: "Kingdom Come: Deliverance 2", price: 69.99, quantity: 200 },
+  { name: "Dark Souls 2", price: 29.99, quantity: 50 },
+  { name: "Witcher 3: Wild Hunt", price: 49.99, quantity: 100 },
+  { name: "Resident Evil 7 biohazard", price: 19.99, quantity: 60 },
+  { name: "L.A. Noire", price: 19.99, quantity: 25 },
 ];
 
 const sql_developers_data = [
-  { name: 'Electronic Arts Inc' },
-  { name: 'Sony Interactive Entertainment' },
-  { name: 'ConcernedApe LLC' },
-  { name: 'Bandai Namco Entertainment America' },
-  { name: 'FromSoftware' },
-  { name: 'Rockstar Games' },
-  { name: 'Microsoft Co.' },
-  { name: 'Turn10 Studios' },
-  { name: 'Ubisoft Entertainment' },
-  { name: 'Deep Silver' },
-  { name: 'CD Projekt SA' },
-  { name: 'Capcom Co.' },
+  { name: "Electronic Arts Inc" },
+  { name: "Sony Interactive Entertainment" },
+  { name: "ConcernedApe LLC" },
+  { name: "Bandai Namco Entertainment America" },
+  { name: "FromSoftware" },
+  { name: "Rockstar Games" },
+  { name: "Microsoft Co." },
+  { name: "Turn10 Studios" },
+  { name: "Ubisoft Entertainment" },
+  { name: "Deep Silver" },
+  { name: "CD Projekt SA" },
+  { name: "Capcom Co." },
 ];
 
 const sql_genres_data = [
-  { genre: 'Sport' },
-  { genre: 'Action' },
-  { genre: 'Driving' },
-  { genre: 'Racing' },
-  { genre: 'Simulation' },
-  { genre: 'Role Playing' },
-  { genre: 'Adventure' },
-  { genre: 'Shooter'},
+  { genre: "Sport" },
+  { genre: "Action" },
+  { genre: "Driving" },
+  { genre: "Racing" },
+  { genre: "Simulation" },
+  { genre: "Role Playing" },
+  { genre: "Adventure" },
+  { genre: "Shooter" },
 ];
 
-
-
-const game_values = sql_games_data.map(data => `('${data.name}', ${data.price}, ${data.quantity})`).join(', ');
-const developer_values = sql_developers_data.map(data => `('${data.name}')`).join(', ');
-const genre_values = sql_genres_data.map(data => `('${data.name}')`).join(', ');
+const game_values = sql_games_data
+  .map((data) => `('${data.name}', ${data.price}, ${data.quantity})`)
+  .join(", ");
+const developer_values = sql_developers_data
+  .map((data) => `('${data.name}')`)
+  .join(", ");
+const genre_values = sql_genres_data
+  .map((data) => `('${data.name}')`)
+  .join(", ");
 const sql_insert = `
 INSERT INTO games (game_name, game_price, game_quantity) 
 VALUES ${game_values};
@@ -100,16 +104,15 @@ VALUES (1, 1), (2, 2), (3, 3), (3, 4), (4, 5), (4, 6), (4, 7), (5, 6), (6, 2), (
 `;
 
 async function main() {
-    console.log("seeding...");
-    const client = new Client({
-        connectionString: `postgresql://${process.env.ROLE_NAME}@localhost:5432/${process.env.DATABASE_NAME}`,
-    });
-      await client.connect();
-      await client.query(sql_create);
-      await client.query(sql_insert);
-      await client.end();
-    console.log("seeding complete");
+  console.log("seeding...");
+  const client = new Client({
+    connectionString: `postgresql://${process.env.ROLE_NAME}@localhost:5432/${process.env.DATABASE_NAME}`,
+  });
+  await client.connect();
+  await client.query(sql_create);
+  await client.query(sql_insert);
+  await client.end();
+  console.log("seeding complete");
 }
 
 main();
-

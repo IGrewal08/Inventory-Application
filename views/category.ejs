@@ -1,28 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
-</head>
-<body>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/category.css" />
+  </head>
+  <body>
     <%- include('partials/header') %>
-    <a href="/categories/add/genre">Add</a>
-     <ul>
-          Genres: <% genres.forEach(genre => { %>
+    <main>
+      <div class="content_categories">
+        <h1>Genres:</h1>
+        <a href="/categories/add/genre" class="category_link">Add New Genre</a>
+        <ul class="filter_links">
+          <% genres.forEach(genre => { %>
           <li>
-            <a href="/inventory?sort=&genre=<%= genre.name %>"><%= genre.name %></a>
+            <a href="/inventory?sort=&genre=<%= genre.name %>"
+              ><%= genre.name %></a
+            >
           </li>
           <% }); %>
         </ul>
-      <a href="/categories/add/developer">Add</a>
-        <ul>
-          Developers: <% developers.forEach(developer => { %>
+        <h1>Developers:</h1>
+        <a href="/categories/add/developer" class="category_link"
+          >Add New Developer</a
+        >
+        <ul class="filter_links">
+          <% developers.forEach(developer => { %>
           <li>
-            <a href="/inventory?sort=&developer=<%= developer.name %>"><%= developer.name %></a>
+            <a href="/inventory?sort=&developer=<%= developer.name %>"
+              ><%= developer.name %></a
+            >
           </li>
           <% }); %>
         </ul>
+      </div>
+    </main>
+
     <%- include('partials/footer') %>
-</body>
+  </body>
 </html>

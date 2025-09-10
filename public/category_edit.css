@@ -1,0 +1,33 @@
+#return_to_category {
+  font-size: 13px;
+  border-radius: 6px;
+  background-color: var(--secondary-color);
+  padding: 0.5rem;
+}
+
+#return_to_category:hover {
+  background-color: var(--highlight-color);
+  color: var(--primary-color);
+}
+
+#new_category_form {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-dark-color);
+  border-radius: 1rem;
+  padding: 2rem;
+  gap: 1rem;
+  margin: 4rem 0;
+  background-color: var(--card-background-color);
+}
+
+#genre {
+  padding: 0.5rem;
+}
+
+#new_category_form > button {
+  border: 1px solid var(--border-dark-color);
+  border-radius: 1rem;
+  padding: 1em;
+  max-width: 6rem;
+}

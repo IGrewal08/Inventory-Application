@@ -173,7 +173,9 @@ export const queryPostGenre = async (genre) => {
 };
 
 export const queryPostDeveloper = async (developer) => {
-  await pool.query("INSERT INTO developers (developer_name) VALUES ($1)", [developer]);
+  await pool.query("INSERT INTO developers (developer_name) VALUES ($1)", [
+    developer,
+  ]);
 };
 
 async function insertNewDevGenres(id, developer, genre) {
