@@ -22,11 +22,16 @@ a {
 }
 
 :root {
+    --primary-color: #ffffff;
     --secondary-color: #84cbd9;
     --font-color: #0b0b0b;
     --highlight-color: #0092b2;
     --header-padding: 0.5rem;
-    font-family: Arial, Helvetica, sans-serif;
+    --form-color: #84cbd92e;
+    --border-dark-color: #dbdbdb;
+    --card-background-color: #2a2a2a0a; 
+    --delete-background-color: #ff7373;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 body {
@@ -54,7 +59,7 @@ footer a {
 }
 
 #search {
-    border: 1px solid lightgray;
+    border: 1px solid var(--border-dark-color);
     border-radius: 8px;
     padding: var(--header-padding);
     margin: 0 var(--header-padding);
@@ -73,7 +78,7 @@ header button {
 
 header button:hover {
     background-color: var(--highlight-color);
-    color: #ffffff;
+    color: var(--primary-color);
 }
 
 main {
@@ -89,5 +94,5 @@ footer {
     display: flex;
     justify-content: center;
     text-align: center;
-    color: #ffffff;
+    color: var(--primary-color);
 }

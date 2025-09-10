@@ -16,8 +16,8 @@
       </div>
       <div id="content">
         <form name="sortFilter" action="/inventory" method="GET">
-          <label>
-            Sort:
+          <label for="sort" id="sort_dropdown">
+            <b>Sort:</b>
             <select onchange="sortFilter.submit()" name="sort">
               <% sorts.forEach(sort => { %> <% if (queries.sort != undefined &&
               queries.sort.includes(sort.message)) { %>
@@ -32,9 +32,10 @@
             </select>
           </label>
           <ul>
-            Genres: <% genres.forEach(genre => { %>
+            <b>Filter By Genre:</b>
+            <% genres.forEach(genre => { %>
             <li>
-              <label>
+              <label for="<%= genre.name %>">
                 <% if (queries.genre != undefined &&
                 queries.genre.includes(genre.name)) { %>
                 <input
@@ -57,9 +58,10 @@
             <% }); %>
           </ul>
           <ul>
-            Developers: <% developers.forEach(developer => { %>
+            <b>Filter By Developer:</b>
+            <% developers.forEach(developer => { %>
             <li>
-              <label>
+              <label for="<%= developer.name %>">
                 <% if (queries.developer != undefined &&
                 queries.developer.includes(developer.name)) { %>
                 <input
@@ -81,7 +83,7 @@
             </li>
             <% }); %>
           </ul>
-          <button type="submit">Filter</button>
+          <button type="submit" id="filter_button">Filter</button>
         </form>
         <% if(products.length === 0) { %>
         <div>No Matching Results Based On Applied Filters!</div>
@@ -90,19 +92,33 @@
           <% products.forEach(product => { %>
           <li>
             <a href="/product/<%= product.name %>">
-              <img src="#" rel="image of product" />
-              <div>
-                <div><%= product.name %></div>
-                <div>$<%= product.price %></div>
+              <div class="card_image_container">
+                <img
+                  src="/img/Assassin's_Creed_Shadows.jpeg"
+                  rel="image of product"
+                />
               </div>
-              <div><%= product.quantity %></div>
-              <div>
-                <%= (product.developers != undefined) ? product.developers :
-                (N/A) %>
+              <div id="card_details">
+                <div id="main_details">
+                  <div id="title"><b><%= product.name %></b></div>
+                  <div>$<%= product.price %></div>
+                </div>
+                <div class="filter_var">
+                  Genres:
+                  <div>
+                    <%= (product.genres != undefined) ? product.genres : (N/A)
+                    %>
+                  </div>
+                </div>
+                <div class="filter_var">
+                  Developers:
+                  <div>
+                    <%= (product.developers != undefined) ? product.developers :
+                    (N/A) %>
+                  </div>
+                </div>
               </div>
-              <div>
-                <%= (product.genres != undefined) ? product.genres : (N/A) %>
-              </div>
+              <div id="product_quantity"><%= product.quantity %></div>
             </a>
           </li>
           <% }); %>

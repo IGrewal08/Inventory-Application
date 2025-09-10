@@ -1,25 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
-</head>
-<body>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/product.css" />
+  </head>
+  <body>
     <%- include('partials/header') %>
-    <img src="#" rel="image of product" />
-    <div>
-    <div><%= product.name %></div>
-    <div>$<%= product.price %></div>
-    </div>
-    <div><%= product.quantity %></div>
-    <div><%= product.developers %></div>
-    <div><%= product.genres %></div>
-    <div><%= product.description %></div>
-    <div>
-        <a href="/product/<%= product.name %>/edit">Edit</a>
-        <a href="/product/<%= product.name %>/delete">Delete</a>
-    </div>
+    <main>
+      <a href="/inventory" id="return_to_inventory">< Return to Inventory</a>
+      <div id="description_product">
+        <div id="product_image_container">
+          <img
+            src="/img/Assassin's_Creed_Shadows.jpeg"
+            rel="image of <%= product.name %>"
+          />
+        </div>
+        <div id="product_text">
+          <div id="name_price_product">
+            <h1><%= product.name %></h1>
+            <h1>$<%= product.price %></h1>
+          </div>
+          <div id="dev_genre_quan_desc">
+            <h4>Developers: <%= product.developers %></h4>
+            <h4>Genres: <%= product.genres %></h4>
+            <div><%= product.description %></div>
+            <h4>Quantity: <%= product.quantity %></h4>
+          </div>
+        </div>
+        <div id="product_links">
+          <a href="/product/<%= product.name %>/edit" id="product_edit">Edit</a>
+          <a href="/product/<%= product.name %>/delete" id="product_delete">Delete</a>
+        </div>
+      </div>
+    </main>
     <%- include('partials/footer') %>
-</body>
+  </body>
 </html>

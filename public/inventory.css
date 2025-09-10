@@ -18,43 +18,132 @@ main {
     grid-area: 2 / 1 / 3 / 3;
     display: grid;
     grid-template-columns: 1fr 4fr;
-    grid-gap: 1px;
 }
 
 #content form {
+    min-width: 12rem;
+    position: relative;
     padding: 1rem;
-    border: 1px solid lightgray;
-    border-radius: 1rem 0 0 0;
+    border: 1px solid var(--border-dark-color);
+    border-radius: 1rem 0 0 1rem;
     grid-column: 1 / 2;
     overflow: hidden;
-    background-color: #33a6c0e5;
+    background-color: var(--form-color);
+}
+
+#content select {
+    border: 1px solid var(--border-dark-color);
+    background-color: var(--card-background-color);
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
+
+#content form > * {
+    padding: 1em;
+}
+
+#filter_button {
+    border: 1px solid var(--border-dark-color);
+    background-color: var(--primary-color);
+    border-radius: 1rem;
+}
+
+#filter_button:hover {
+    background-color: var(--highlight-color);
+    color: var(--primary-color);
+}
+
+#content form > ul > li {
+    padding: 0.5em;
+}
+
+#content form > ul > li:hover {
+    color: var(--highlight-color);
+}
+
+#sort_dropdown {
+    /* FIX FOR LATER (place outside of form)*/
 }
 
 #inventory {
     padding: 1rem;
-    border: 1px solid lightgray;
+    border: 1px solid var(--border-dark-color);
     border-left: none;
     border-radius: 0 1rem 1rem 0;
     grid-column: 2 / 3;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
+    gap: 1em;
 }
 
 #inventory li {
-    border: 1px solid lightgray;
+    border-radius: 1rem;
+    background-color: var(--card-background-color);
+    height: 23.6rem;
 }
 
+#inventory li:hover {
+    box-shadow: 0 0 5px black;
+}
+
+#inventory a {
+    display: grid;
+    grid-template-rows: 1fr 0.75fr auto;
+    overflow: scroll;
+    justify-items: center;
+    text-align: center;
+}
+
+.card_image_container {
+    height: auto;
+    width: 10rem;
+    overflow: hidden;
+    padding: 1em;
+}
+
+#inventory img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#card_details {
+    max-height: 6rem;
+    padding: 1em;
+}
+
+#title {
+    padding-bottom: 0.5rem;
+}
+
+#main_details {
+    overflow: hidden;
+}
+
+#product_quantity {
+    align-self: end;
+    border-top: 1px solid var(--border-dark-color);
+    background-color: palegreen;
+    text-align: center;
+    padding: 0.5rem 0;
+    width: 100%;
+    border-radius: 0 0 1rem 1rem;
+}
+
+.filter_var {
+    font-size: 10px;
+}
 
 #heading > a {
     font-size: 13px;
     border-radius: 6px;
-    background-color: #33a6c0e5;
+    background-color: var(--secondary-color);
     padding: 0.5rem;
 }
 
 #heading > a:hover {
-    background-color: #33a6c03d;
+    background-color: var(--highlight-color);
+    color: var(--primary-color);
 }
 
 
