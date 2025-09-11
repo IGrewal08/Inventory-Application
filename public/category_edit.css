@@ -18,6 +18,7 @@
   padding: 2rem;
   gap: 1rem;
   margin: 4rem 0;
+  min-width: 12rem;
   background-color: var(--card-background-color);
 }
 
@@ -30,4 +31,15 @@
   border-radius: 1rem;
   padding: 1em;
   max-width: 6rem;
+}
+
+@media (max-width: 512px) {
+  #return_to_category {
+    display: flex;
+    justify-content: center;
+    margin: 0 2rem;
+  }
+  #new_category_form {
+    margin: 4rem 2rem;
+  }
 }

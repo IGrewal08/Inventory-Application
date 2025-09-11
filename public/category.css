@@ -33,3 +33,14 @@
   background-color: var(--form-color);
   box-shadow: 0 0 5px black;
 }
+
+@media (max-width: 450px) {
+  #return_to_category {
+    display: flex;
+    justify-content: center;
+    margin: 0 2rem;
+  }
+  .content_categories {
+    margin: 2rem 1rem;
+  }
+}

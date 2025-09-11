@@ -1,6 +1,7 @@
 import { body, validationResult } from "express-validator";
 import * as db from "../db/query.js";
 
+
 export const getProduct = async (req, res) => {
   const productName = req.params.name;
   try {
@@ -15,8 +16,8 @@ export const getProduct = async (req, res) => {
 };
 
 export const getEditProduct = async (req, res) => {
-  const { name } = req.params;
   try {
+    const { name } = req.params;
     if (req.method === "GET") {
       const product = await db.queryGetProduct(name);
       const genres = await db.queryAllGenres();
@@ -38,8 +39,7 @@ export const getEditProduct = async (req, res) => {
         genres: genres,
       });
     } else if (req.method === "POST") {
-      console.log("test");
-      await db.queryUpdateProduct(req.body);
+      await db.queryUpdateProduct(req.file, req.body);
       res.redirect("/inventory");
     }
   } catch (err) {
@@ -69,8 +69,7 @@ export const getNewProductForm = async (req, res) => {
         developers: developers,
       });
     } else if (req.method === "POST") {
-      console.log(req.body);
-      await db.queryPostNewProduct(req.body);
+      await db.queryPostNewProduct(req.file, req.body);
       res.redirect("/inventory");
     }
   } catch (err) {

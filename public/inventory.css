@@ -22,12 +22,10 @@ main {
 
 #content form {
   min-width: 12rem;
-  position: relative;
   padding: 1rem;
   border: 1px solid var(--border-dark-color);
   border-radius: 1rem 0 0 1rem;
   grid-column: 1 / 2;
-  overflow: hidden;
   background-color: var(--form-color);
 }
 
@@ -61,10 +59,6 @@ main {
 
 #content form > ul > li:hover {
   color: var(--highlight-color);
-}
-
-#sort_dropdown {
-  /* FIX FOR LATER (place outside of form)*/
 }
 
 #inventory {
@@ -147,4 +141,35 @@ main {
 #heading > a:hover {
   background-color: var(--highlight-color);
   color: var(--primary-color);
+}
+
+@media (max-width: 450px) {
+  #heading {
+    justify-content: center;
+  }
+  #content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #content form {
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--border-dark-color);
+    border-radius: 1rem 1rem 0 0;
+    background-color: var(--form-color);
+    grid-template-rows: min-content;
+  }
+
+  #inventory {
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--border-dark-color);
+    border-radius: 0 0 1rem 1rem;
+    grid-column: 2 / 3;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-rows: min-content;
+    gap: 1em;
+  }
 }

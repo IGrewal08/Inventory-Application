@@ -10,7 +10,12 @@
   <body>
     <%- include('partials/header') %>
     <main>
-      <form action="/product/new" method="POST" id="product_edit_form">
+      <form
+        action="/product/new"
+        method="POST"
+        id="product_edit_form"
+        enctype="multipart/form-data"
+      >
         <div id="primary_filter">
           <label for="title">
             Title:
@@ -104,6 +109,9 @@
             <% });%>
           </select>
           <% } %>
+        </label>
+        <label for="image">
+          <input type="file" id="image" name="image" accept="image/jpeg" />
         </label>
         <button type="submit" id="add_form_new">Add</button>
       </form>

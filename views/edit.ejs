@@ -14,6 +14,7 @@
         action="/product/<%= name %>/edit"
         method="POST"
         id="product_edit_form"
+        enctype="multipart/form-data"
       >
         <div id="primary_filter">
           <label for="title">
@@ -154,6 +155,14 @@
           id="name"
           value="<%= product.name %>"
         />
+        <label for="image">
+          <input 
+            type="file" 
+            id="image" 
+            name="image" 
+            accept="image/jpeg"
+         />
+        </label>
         <button type="submit" id="add_form_new">Add</button>
       </form>
     </main>

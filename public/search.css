@@ -37,3 +37,9 @@
   height: auto;
   max-width: 100%;
 }
+
+@media (max-width: 512px) {
+  #product_search_card {
+    margin: 0 1rem;
+  }
+}
