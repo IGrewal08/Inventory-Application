@@ -9,7 +9,7 @@ JOIN game_genres gg using (game_id)
 JOIN genres ge USING (genre_id)
 `;
 
-const groupingQuery = ` GROUP BY game_name, game_price, game_quantity, game_description, game_image;`;
+const groupingQuery = ` GROUP BY game_name, game_price, game_quantity, game_description, game_image `;
 
 /* All Items from tables */
 export const queryAllInventory = async () => {
@@ -33,6 +33,14 @@ export const queryAllDevelopers = async () => {
 
 /* Sort and Filter */
 export const queryInventoryByFilter = async (query) => {
+  const customQuery = `WHERE game_name IN (
+  SELECT ga.game_name as name
+  FROM developers d
+  JOIN game_developers gd USING (developer_id)
+  JOIN games ga USING (game_id)
+  JOIN game_genres gg using (game_id)
+  JOIN genres ge USING (genre_id)
+  `;
   const { genre, developer, sort } = query;
   let filterQuery = "";
   let sortQuery = "";
@@ -89,10 +97,7 @@ export const queryInventoryByFilter = async (query) => {
   }
 
   const { rows } = await pool.query(
-    myQuery +
-      filterQuery +
-      groupingQuery +
-      sortQuery
+    myQuery + customQuery + filterQuery + ')' + groupingQuery + sortQuery
   );
   return rows;
 };
@@ -119,10 +124,7 @@ export const queryGetProduct = async (product) => {
 };
 
 export const queryUpdateProduct = async (file, data) => {
-  const { filename } = file;
   const { name, price, quantity, description, developer, genre, _name } = data;
-  console.log(filename);
-
   const { rows } = await pool.query(
     `SELECT game_id FROM games WHERE game_name = $1`,
     [_name]
@@ -131,46 +133,53 @@ export const queryUpdateProduct = async (file, data) => {
 
   await pool.query(`DELETE FROM game_developers WHERE game_id = $1`, [id]);
   await pool.query(`DELETE FROM game_genres WHERE game_id = $1`, [id]);
-  if (filename != null) {
+  if (file != undefined) {
+    const { filename } = file;
     await pool.query(
-    `UPDATE games SET game_name=$1, game_price=$2, game_quantity=$3, game_description=$4, game_image=$5 WHERE game_id=$6;`,
-    [name, Number(price), Number(quantity), description, filename, id]
-  );
+      `UPDATE games SET game_name=$1, game_price=$2, game_quantity=$3, game_description=$4, game_image=$5 WHERE game_id=$6;`,
+      [name, Number(price), Number(quantity), description, filename, id]
+    );
   } else {
     await pool.query(
-    `UPDATE games SET game_name=$1, game_price=$2, game_quantity=$3, game_description=$4 WHERE game_id=$5;`,
-    [name, Number(price), Number(quantity), description, id]
-  );
+      `UPDATE games SET game_name=$1, game_price=$2, game_quantity=$3, game_description=$4 WHERE game_id=$5;`,
+      [name, Number(price), Number(quantity), description, id]
+    );
   }
-  
 
   insertNewDevGenres(id, developer, genre);
 };
 
 export const queryDeleteProduct = async (product) => {
-  const deleteQuery = `DELETE FROM games WHERE game_id = $1 
-        DELETE FROM game_developers WHERE game_id = $1
-        DELETE FROM game_genres WHERE game_id = $1
-`;
-  const productId = await pool.query(
+  const { rows } = await pool.query(
     "SELECT game_id FROM games WHERE game_name = $1",
     [product]
   );
-  await pool.query(deleteQuery, [productId]);
+
+  if (rows.length != 0) {
+    const id = rows[0].game_id;
+    await pool.query("DELETE FROM games WHERE game_id = $1", [id]);
+  }
 };
 
 export const queryPostNewProduct = async (file, product) => {
-  const { filename } = file;
   const { name, price, quantity, description, developer, genre } = product;
   let formattedDevelopers = developer.filter((element) => element != "-");
   let formattedGenres = genre.filter((element) => element != "-");
   formattedDevelopers = [...new Set(formattedDevelopers)];
   formattedGenres = [...new Set(formattedGenres)];
 
-  await pool.query(
-    "INSERT INTO games (game_name, game_price, game_quantity, game_description, game_image) VALUES ($1, $2, $3, $4, $5)",
-    [name, price, quantity, description, filename]
-  );
+  if (file != undefined) {
+    const { filename } = file;
+    await pool.query(
+      "INSERT INTO games (game_name, game_price, game_quantity, game_description, game_image) VALUES ($1, $2, $3, $4, $5)",
+      [name, price, quantity, description, filename]
+    );
+  } else {
+    await pool.query(
+      "INSERT INTO games (game_name, game_price, game_quantity, game_description) VALUES ($1, $2, $3, $4)",
+      [name, price, quantity, description]
+    );
+  }
   const { rows } = await pool.query(
     "SELECT game_id FROM games WHERE game_name = $1",
     [name]

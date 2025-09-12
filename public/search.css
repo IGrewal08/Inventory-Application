@@ -38,8 +38,31 @@
   max-width: 100%;
 }
 
+#error_search_card {
+  margin: 4rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+#error_search_card > a {
+  border: 1px solid var(--border-dark-color);
+  border-radius: 1rem;
+  padding: 1em;
+  max-width: 10rem;
+  text-align: center;
+}
+
+#error_search_card > a:hover {
+  background-color: var(--secondary-color);
+}
+
 @media (max-width: 512px) {
   #product_search_card {
     margin: 0 1rem;
   }
+  #error_search_card {
+   margin: 4rem 1rem;
+ } 
 }

@@ -1,10 +1,43 @@
 import { body, validationResult } from "express-validator";
 import * as db from "../db/query.js";
 
+const validateUser = [
+  body("name")
+    .if((value, { req }) => req.method === 'POST')
+    .isString()
+    .notEmpty()
+    .withMessage("Name must contain a string"),
+  body("price")
+    .if((value, { req }) => req.method === 'POST')
+    .isNumeric()
+    .notEmpty()
+    .withMessage("Must contain a numeric query"),
+  body("quantity")
+    .if((value, { req }) => req.method === 'POST')
+    .isInt()
+    .notEmpty()
+    .withMessage("Must contain a integer query"),
+  body("description")
+    .if((value, { req }) => req.method === 'POST')
+    .trim()
+    .isString()
+    .notEmpty()
+    .withMessage("Must contain a string query"),
+  body("developer")
+    .if((value, { req }) => req.method === 'POST')
+    .isArray()
+    .notEmpty()
+    .withMessage("Invalid values"),
+  body("genre")
+    .if((value, { req }) => req.method === 'POST')
+    .isArray()
+    .notEmpty()
+    .withMessage("Invalid values"),
+];
 
 export const getProduct = async (req, res) => {
-  const productName = req.params.name;
   try {
+    const productName = req.params.name;
     const product = await db.queryGetProduct(productName);
     res.render("product", {
       title: productName,
@@ -15,14 +48,26 @@ export const getProduct = async (req, res) => {
   }
 };
 
-export const getEditProduct = async (req, res) => {
+export const getEditProduct = [validateUser, async (req, res) => {
+  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("edit", {
+        title: "Edit",
+        name: req.param.name,
+        product: product,
+        productDevelopers: productDevelopers,
+        productGenres: productGenres,
+        developers: developers,
+        genres: genres,
+        errors: errors.array(),
+      });
+    }
   try {
     const { name } = req.params;
     if (req.method === "GET") {
       const product = await db.queryGetProduct(name);
       const genres = await db.queryAllGenres();
       const developers = await db.queryAllDevelopers();
-
       const productDevelopers = product.developers.includes(",")
         ? product.developers.split(", ")
         : [product.developers];
@@ -45,20 +90,28 @@ export const getEditProduct = async (req, res) => {
   } catch (err) {
     console.error(err);
   }
-};
+}];
 
 export const deleteProduct = async (req, res) => {
-  const product = req.body;
   try {
+    const product = req.params.name;
     await db.queryDeleteProduct(product);
-    res.status(204).send();
     res.redirect("/inventory");
   } catch (err) {
     console.error(err);
   }
 };
 
-export const getNewProductForm = async (req, res) => {
+export const getNewProductForm = [validateUser, async (req, res) => {
+  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("new", {
+        title: "New",
+        genres: genres,
+        developers: developers,
+        errors: errors.array(),
+      });
+    }
   try {
     const genres = await db.queryAllGenres();
     const developers = await db.queryAllDevelopers();
@@ -75,4 +128,4 @@ export const getNewProductForm = async (req, res) => {
   } catch (err) {
     console.error(err);
   }
-};
+}];

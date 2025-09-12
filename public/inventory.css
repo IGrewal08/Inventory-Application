@@ -77,6 +77,8 @@ main {
   border-radius: 1rem;
   background-color: var(--card-background-color);
   height: 23.6rem;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 #inventory li:hover {
@@ -101,6 +103,7 @@ main {
 #inventory img {
   width: 100%;
   height: 100%;
+  border-radius: 1rem;
   object-fit: cover;
 }
 
@@ -120,7 +123,6 @@ main {
 #product_quantity {
   align-self: end;
   border-top: 1px solid var(--border-dark-color);
-  background-color: palegreen;
   text-align: center;
   padding: 0.5rem 0;
   width: 100%;
@@ -141,6 +143,12 @@ main {
 #heading > a:hover {
   background-color: var(--highlight-color);
   color: var(--primary-color);
+}
+
+#no_match {
+  margin-top: 10rem;
+  align-self: baseline;
+  justify-self: center;
 }
 
 @media (max-width: 450px) {

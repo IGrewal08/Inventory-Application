@@ -22,7 +22,8 @@ inventoryRouter.get("/", inventoryController.getHomePage);
 inventoryRouter.get("/inventory", inventoryController.getInventoryList);
 inventoryRouter.get("/inventory/list", inventoryController.getInventorySearch);
 inventoryRouter.get("/categories", inventoryController.getCategories);
-inventoryRouter.all("/categories/add/:type", inventoryController.getCategoriesForm);
+inventoryRouter.get("/categories/add/:type", inventoryController.getCategoriesForm);
+inventoryRouter.post("/categories/add/:type", inventoryController.postCategoriesForm);
 
 inventoryRouter.get("/product/new", productController.getNewProductForm);
 inventoryRouter.post("/product/new", upload.single('image'), productController.getNewProductForm);
@@ -30,7 +31,7 @@ inventoryRouter.post("/product/new", upload.single('image'), productController.g
 inventoryRouter.get("/product/:name", productController.getProduct);
 inventoryRouter.get("/product/:name/edit", productController.getEditProduct);
 inventoryRouter.post("/product/:name/edit", upload.single('image'), productController.getEditProduct);
-inventoryRouter.delete(
+inventoryRouter.get(
   "/product/:name/delete",
   productController.deleteProduct
 );

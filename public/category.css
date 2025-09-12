@@ -5,6 +5,10 @@
   gap: 1rem;
 }
 
+#dev_category {
+  margin-top: 2rem;
+}
+
 .category_link {
   border: 1px solid var(--border-dark-color);
   border-radius: 1rem;

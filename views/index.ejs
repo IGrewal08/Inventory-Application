@@ -3,14 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/img/thumbnail-removebg-preview.png" type="image/png">
     <title><%= title %></title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
     <%- include('partials/header') %>
     <main id="main_index">
-      <a href="/inventory">To Inventory...</a>
-      <a href="/categories">To Categories...</a>
+      <div id="desc_index">
+        <h1>Welcome</h1>
+        <p>Welcome to The Game Vault! Where all your gaming inventory needs are met! Have total control over products, developers, and different genres.
+          Build and add new games into your personal inventory, record product stock and price. Give it a try and explore all of the features our app has to offer!
+        </p>
+      </div>
+      <a href="/inventory" id="inventory_image_container">
+        <div id="image_inventory">To Inventory...</div>
+      </a>
+      <a href="/categories" id="category_image_container">
+        <div id="image_categories">To Categories...</div>
+      </a>
     </main>
     <%- include('partials/footer') %>
   </body>

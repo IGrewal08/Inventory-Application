@@ -1,5 +1,25 @@
-import { body, validationResult } from "express-validator";
+import { body, query, validationResult } from "express-validator";
 import * as db from "../db/query.js";
+
+const validateSearch = [
+  query("search")
+    .isString()
+    .notEmpty()
+    .withMessage("Search must contain a query"),
+];
+
+const validateCategory = [
+  body("developer")
+    .if(query("type").equals("developer"))
+    .isString()
+    .notEmpty()
+    .withMessage("Must contain a string query for developer"),
+  body("genre")
+    .if(query("type").equals("genre"))
+    .isString()
+    .notEmpty()
+    .withMessage("Must contain a string query for genre"),
+];
 
 export const getHomePage = (req, res) => {
   res.render("index", {
@@ -38,18 +58,30 @@ export const getInventoryList = async (req, res) => {
   }
 };
 
-export const getInventorySearch = async (req, res) => {
-  const { search } = req.query;
-  try {
-    const products = await db.queryProductBySearch(search);
-    res.render("search", {
-      title: "Search",
-      products: products,
-    });
-  } catch (err) {
-    console.error(err);
-  }
-};
+export const getInventorySearch = [
+  validateSearch,
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      console.log(errors);
+      return res.status(400).render("search", {
+        title: "Search",
+        products: products,
+        errors: errors.array(),
+      });
+    }
+    try {
+      const { search } = req.query;
+      const products = await db.queryProductBySearch(search);
+      res.render("search", {
+        title: "Search",
+        products: products,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  },
+];
 
 export const getCategories = async (req, res) => {
   try {
@@ -66,12 +98,24 @@ export const getCategories = async (req, res) => {
 };
 
 export const getCategoriesForm = async (req, res) => {
-  if (req.method === "GET") {
-    res.render("categoryForm", {
-      title: "Add Category",
-      type: req.params.type,
-    });
-  } else if (req.method === "POST") {
+  res.render("categoryForm", {
+    title: "Add Category",
+    type: req.params.type,
+  });
+};
+
+export const postCategoriesForm = [
+  validateCategory,
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      console.log(errors);
+      return res.status(400).render("categoryForm", {
+        title: "Add",
+        type: req.params.type,
+        errors: errors.array(),
+      });
+    }
     try {
       if (req.params.type === "genre") {
         await db.queryPostGenre(req.body.genre);
@@ -82,5 +126,5 @@ export const getCategoriesForm = async (req, res) => {
     } catch (err) {
       console.error(err);
     }
-  }
-};
+  },
+];

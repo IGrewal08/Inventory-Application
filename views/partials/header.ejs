@@ -1,15 +1,29 @@
 <header>
   <nav>
-    <a href="/">ICON</a>
+    <a href="/" id="logo_container">
+      <img src="/img/thumbnail-removebg-preview.png" rel="image of logo" id="logo">
+    </a>
     <ul>
       <li>
-        <a href="/" id="home_page">Home</a>
+        <a href="/" id="home_page" 
+        <% if (title !='Inventory' && title !='Categories' && title != 'Add Category' ) { %>
+         style="color: #000000; text-decoration: underline;"
+        <% } %>
+        >Home</a>
       </li>
       <li>
-        <a href="/inventory" id="inventory_page">Inventory</a>
+        <a href="/inventory" id="inventory_page"
+        <% if (title ==='Inventory') { %>
+         style="color: #000000; text-decoration: underline;"
+        <% } %>
+        >Inventory</a>
       </li>
       <li>
-        <a href="/categories" id="categories_page">Categories</a>
+        <a href="/categories" id="categories_page"
+        <% if (title ==='Categories' || title === 'Add Category') { %>
+         style="color: #000000; text-decoration: underline;"
+        <% } %>
+        >Categories</a>
       </li>
     </ul>
   </nav>

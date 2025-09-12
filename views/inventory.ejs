@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/img/thumbnail-removebg-preview.png" type="image/png">
     <title><%= title %></title>
     <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="/inventory.css" />
@@ -20,7 +21,7 @@
             <b>Sort:</b>
             <select onchange="sortFilter.submit()" name="sort">
               <% sorts.forEach(sort => { %> <% if (queries.sort != undefined &&
-              queries.sort.includes(sort.message)) { %>
+              queries.sort.includes(sort.value)) { %>
               <option name="sort" value="<%= sort.value %>" selected>
                 <%= sort.message %>
               </option>
@@ -86,17 +87,14 @@
           <button type="submit" id="filter_button">Filter</button>
         </form>
         <% if(products.length === 0) { %>
-        <div>No Matching Results Based On Applied Filters!</div>
+        <div id="no_match">No Matching Results Based On Applied Filters!</div>
         <% } else { %>
         <ul id="inventory">
           <% products.forEach(product => { %>
           <li>
             <a href="/product/<%= product.name %>">
               <div class="card_image_container">
-                <img
-                  src="/img/<%= product.image %>"
-                  rel="image of product"
-                />
+                <img src="/img/<%= product.image %>" rel="image of product" />
               </div>
               <div id="card_details">
                 <div id="main_details">
@@ -118,7 +116,15 @@
                   </div>
                 </div>
               </div>
-              <div id="product_quantity"><%= product.quantity %></div>
+              <div id="product_quantity" 
+              <% if (product.quantity >= 100) { %>
+                 style="background-color: palegreen;" 
+                 <% } else if (product.quantity <= 49) { %>
+                   style="background-color: palevioletred;" 
+                  <% } else { %>
+                   style="background-color: palegoldenrod;" <% } %> >
+                  <%= product.quantity %>
+              </div>
             </a>
           </li>
           <% }); %>

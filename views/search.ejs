@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/img/thumbnail-removebg-preview.png" type="image/png">
     <title><%= title %></title>
     <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="/search.css" />
@@ -11,6 +12,12 @@
     <%- include('partials/header') %>
     <main>
       <ul id="product_search_list">
+        <% if (products.length === 0) { %>
+          <li id="error_search_card">
+            <h2>No Results Found</h2>
+            <a href="/inventory">Return to Inventory</a>
+          </li>
+        <% } %>
         <% if(locals.products) %> <% products.forEach(product => { %>
         <li id="product_search_card">
           <a href="/product/<%= product.name %>">
